@@ -173,8 +173,13 @@ are very welcome.
 
 ## License
 
-CurrentPod is free to use and distribute. It comes as is: the author is not
-responsible for a full hard disk, or for what the podcasts say.
+CurrentPod is released under the [MIT License](LICENSE): use it, change it,
+share it. It comes as is, and the author is not responsible for a full hard
+disk, or for what the podcasts say.
+
+The license covers CurrentPod's own code and manuals. MUI, AmiSSL and
+mpega.library are separate products with their own terms, and are not part
+of this repository.
 
 Apple, Apple Podcasts and iTunes are trademarks of Apple Inc. CurrentPod is
 not endorsed by, affiliated with or otherwise connected to Apple.

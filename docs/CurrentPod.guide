@@ -1226,9 +1226,11 @@
 @NEXT Index
 @TITLE "CurrentPod - License and thanks"
 
-   CurrentPod is free to use and distribute. The program comes as is;
-   the author is not responsible for a full hard disk or for what the
-   podcasts say.
+   CurrentPod is released under the MIT License: free to use, change
+   and share. The full text is in the LICENSE file in the source code,
+   github.com/amiwoodcarver/currentpod. The program comes as is; the
+   author is not responsible for a full hard disk or for what the
+   podcasts say. MUI, AmiSSL and mpega.library have their own terms.
 
    @{b}Thanks to@{ub}
 

@@ -1180,9 +1180,11 @@
 @NEXT Index
 @TITLE "CurrentPod - Licens och tack"
 
-   CurrentPod är fritt att använda och sprida. Programmet levereras i
-   befintligt skick; författaren ansvarar inte för full hårddisk eller
-   för vad poddarna säger.
+   CurrentPod släpps under MIT-licensen: fritt att använda, ändra och
+   sprida. Hela texten finns i filen LICENSE i källkoden,
+   github.com/amiwoodcarver/currentpod. Programmet levereras i befintligt
+   skick; författaren ansvarar inte för full hårddisk eller för vad
+   poddarna säger. MUI, AmiSSL och mpega.library har egna villkor.
 
    @{b}Tack till@{ub}
 
