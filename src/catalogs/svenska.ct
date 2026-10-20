@@ -1,0 +1,673 @@
+## version $VER: CurrentPod.catalog 1.0 (20.10.2026)
+## language svenska
+## codeset 0
+;
+MSG_BTN_DOWNLOAD
+Hämta
+;
+MSG_BTN_PLAY
+Spela
+;
+MSG_BTN_CONVERT
+Konvertera
+;
+MSG_COL_STATUS
+\33bStatus
+;
+MSG_COL_DATE
+\33bDatum
+;
+MSG_COL_EPISODE
+\33bAvsnitt
+;
+MSG_COL_LENGTH
+\33bLängd
+;
+MSG_COL_PODCAST
+\33bPodd
+;
+MSG_COL_NEW
+\33bNya
+;
+MSG_COL_NAME
+\33bNamn
+;
+MSG_COL_PUBLISHER
+\33bUtgivare
+;
+MSG_ST_PAUSED
+\33bpaus
+;
+MSG_ST_PLAYING
+\33bspelar
+;
+MSG_ST_DOWNLOADING_PCT
+hämtar %ld%%
+;
+MSG_ST_DOWNLOADING
+hämtar
+;
+MSG_ST_QUEUED
+i kö
+;
+MSG_ST_CONVERTING
+konv. %ld%%
+;
+MSG_ST_DOWNLOADED
+hämtad
+;
+MSG_ST_8SVX_HEARD
+8SVX, hörd
+;
+MSG_ST_HEARD
+hörd
+;
+MSG_ST_HEARD_DELETED
+hörd, raderad
+;
+MSG_ST_ERROR
+fel
+;
+MSG_ST_NEW
+ny
+;
+MSG_ST_NOFILE
+ingen fil
+;
+MSG_NOTHING_PLAYING
+Inget spelas
+;
+MSG_INFO_8SVX
+8SVX %ld Hz mono, 8 bit, ingen avkodning%s
+;
+MSG_INFO_MP3
+%ld kbit/s -> %ld Hz %s, %ld bit, kvalitet %s%s%s
+;
+MSG_STEREO
+stereo
+;
+MSG_MONO
+mono
+;
+MSG_PAUSE_SUFFIX
+  PAUS
+;
+MSG_LAG_SUFFIX
+  HINNER INTE MED
+;
+MSG_Q_AUTO_SHORT
+auto
+;
+MSG_Q_LOW_SHORT
+låg
+;
+MSG_Q_MEDIUM_SHORT
+mellan
+;
+MSG_Q_HIGH_SHORT
+hög
+;
+MSG_Q_FULL_SHORT
+full
+;
+MSG_LABEL_VOL
+Vol
+;
+MSG_GROUP_PLAYER
+Spelare
+;
+MSG_TIME_ZERO
+0:00 / 0:00
+;
+MSG_WIN_SEARCH
+Sök i Apple Podcasts
+;
+MSG_LABEL_SEARCH
+Sök
+;
+MSG_LABEL_COUNTRY
+Land
+;
+MSG_SEARCH_HINT
+Skriv ett sökord och tryck Retur. Tomt sökord ger inget.
+;
+MSG_BTN_SUBSCRIBE
+Prenumerera
+;
+MSG_BTN_CLOSE
+Stäng
+;
+MSG_BTN_CANCEL
+Avbryt
+;
+MSG_SEARCHING
+Söker...
+;
+MSG_SEARCH_FAILED
+Sökningen misslyckades: %s
+;
+MSG_HITS_SHORT
+%ld träffar
+;
+MSG_HITS_STATUS
+%ld träffar i Apple Podcasts
+;
+MSG_SUBSCRIBING
+Prenumererar, flödet hämtas i bakgrunden.
+;
+MSG_SEARCHING_FOR
+Söker i Apple Podcasts efter \"%.60s\"...
+;
+MSG_LOOKING_UP
+Slår upp Apple-ID %s...
+;
+MSG_APPLE_UNKNOWN_ID
+Apple känner inte till det ID:t
+;
+MSG_LOOKUP_FAILED
+Uppslagningen misslyckades: %s
+;
+MSG_NO_ID_IN_LINK
+Hittade inget podd-ID i länken
+;
+MSG_ALREADY_SUBSCRIBED
+Du prenumererar redan på %.60s
+;
+MSG_WIN_URL
+Prenumerera på adress
+;
+MSG_URL_PROMPT
+RSS-adress eller länk från Apple Podcasts:
+;
+MSG_WIN_INFO
+Information
+;
+MSG_NO_DESC
+(ingen beskrivning)
+;
+MSG_NOT_DOWNLOADED
+(inte hämtad)
+;
+MSG_NEVER
+aldrig
+;
+MSG_INFO_EPISODE_FMT
+\33b%.150s\33n\n%s  %s  %s\n%s\n\n%.3500s\n\n\33iAdress:\33n %.400s\n\33iFil:\33n %.200s
+;
+MSG_INFO_FEED_FMT
+\33b%.150s\33n\n%.100s\n\n%.3000s\n\n\33iFlöde:\33n %.400s\n\33iWebb:\33n %.200s\n\33iUppdaterad:\33n %s\n\33iApple-ID:\33n %ld\n%s%s
+;
+MSG_INFO_LAST_ERROR
+\33iSenaste fel:\33n 
+;
+MSG_INFO_TITLE_PODCAST
+Podd
+;
+MSG_MENU_PROJECT
+Projekt
+;
+MSG_MENU_ABOUT
+Om CurrentPod...
+;
+MSG_MENU_SAVE_SETTINGS
+Spara inställningar
+;
+MSG_MENU_QUIT
+Avsluta
+;
+MSG_MENU_PODCAST
+Podd
+;
+MSG_MENU_SEARCH
+Sök i Apple Podcasts...
+;
+MSG_MENU_SUBSCRIBE_URL
+Prenumerera på adress...
+;
+MSG_MENU_UPDATE
+Uppdatera
+;
+MSG_MENU_UPDATE_ALL
+Uppdatera alla
+;
+MSG_MENU_INFORMATION
+Information...
+;
+MSG_MENU_REMOVE_FEED
+Ta bort prenumeration
+;
+MSG_MENU_EPISODE
+Avsnitt
+;
+MSG_MENU_PLAY
+Spela
+;
+MSG_MENU_PAUSE
+Paus / fortsätt
+;
+MSG_MENU_STOP
+Stoppa
+;
+MSG_MENU_DOWNLOAD
+Hämta
+;
+MSG_MENU_DOWNLOAD_NEW
+Hämta alla nya
+;
+MSG_MENU_CANCEL_DL
+Avbryt hämtning
+;
+MSG_MENU_CONVERT
+Konvertera till 8SVX
+;
+MSG_MENU_CANCEL_CONV
+Avbryt konvertering
+;
+MSG_MENU_DELETE_MP3
+Radera MP3, behåll 8SVX
+;
+MSG_MENU_MARK
+Markera som hörd/ohörd
+;
+MSG_MENU_DELETE_FILE
+Radera hämtad fil
+;
+MSG_MENU_OPEN_LINK
+Öppna webbsidan
+;
+MSG_MENU_SETTINGS
+Inställningar
+;
+MSG_MENU_QUALITY
+Kvalitet
+;
+MSG_MENU_Q_AUTO
+Automatisk
+;
+MSG_MENU_Q_LOW
+Låg (mono 11 kHz)
+;
+MSG_MENU_Q_MEDIUM
+Mellan (mono 22 kHz)
+;
+MSG_MENU_Q_HIGH
+Hög (stereo 22 kHz)
+;
+MSG_MENU_Q_FULL
+Full (stereo 44 kHz)
+;
+MSG_MENU_CONVERSION
+Konvertering
+;
+MSG_MENU_CV_LOW
+12 kHz, mindre fil
+;
+MSG_MENU_CV_MEDIUM
+24 kHz, bättre ljud
+;
+MSG_MENU_BITS14
+14-bitars ljud
+;
+MSG_MENU_AUTONEXT
+Spela nästa automatiskt
+;
+MSG_STARTING
+Startar %.70s
+;
+MSG_DOWNLOAD_FIRST
+Hämta avsnittet först (knappen Hämta eller Amiga-D)
+;
+MSG_NOT_MP3
+Avsnittet är inte MP3 och kan inte spelas på Amigan
+;
+MSG_CONVERTING_WAIT
+Avsnittet konverteras just nu, vänta eller avbryt
+;
+MSG_CONVERTER_MISSING
+Konverteraren kunde inte startas (saknas mpega.library?)
+;
+MSG_CONVERSION_BUSY
+En konvertering pågår redan: %.50s
+;
+MSG_ALREADY_CONVERTED
+Avsnittet är redan konverterat
+;
+MSG_CONVERTING_TO
+Konverterar till 8SVX: %.55s
+;
+MSG_CONVERSION_FAILED
+Konverteringen misslyckades: %s
+;
+MSG_CONVERTED
+Konverterat: %.60s
+;
+MSG_CONVERTING_PCT
+Konverterar %ld %% (%s): %.45s
+;
+MSG_DL_PROGRESS_TOTAL
+Hämtar %s / %s: %.50s
+;
+MSG_DL_PROGRESS
+Hämtar %s: %.50s
+;
+MSG_DL_STARTED
+Hämtar: %.60s
+;
+MSG_DL_DONE
+Hämtat: %.60s
+;
+MSG_DL_FAILED
+Hämtningen misslyckades: %s
+;
+MSG_EPISODE_WORD
+avsnitt
+;
+MSG_PODCAST_WORD
+podd
+;
+MSG_FEED_FETCHING_FOR
+Hämtar flödet för %.60s...
+;
+MSG_FEED_FETCHING
+Hämtar flödet %.60s...
+;
+MSG_FEED_PROGRESS
+Hämtar flödet%s%.50s: %s%s
+;
+MSG_FOR_WORD
+ för 
+;
+MSG_FEED_NO_CHANGES
+%.60s: inga ändringar
+;
+MSG_FEED_NEW_EPISODES
+%.60s: %ld nya avsnitt
+;
+MSG_FEED_NEW_TRUNC
+%.40s: %ld nya avsnitt (stort flöde, de %ld nyaste)
+;
+MSG_FETCHING_NAME
+(hämtar...)
+;
+MSG_UNNAMED_PODCAST
+(namnlös podd)
+;
+MSG_SETTINGS_SAVED
+Inställningarna sparade
+;
+MSG_QUALITY_NEXT
+Kvaliteten gäller från nästa avsnitt som startas
+;
+MSG_CONV_SETTING
+Nya konverteringar görs i %s
+;
+MSG_MP3_DELETED
+MP3-filen raderad, 8SVX-filen kvar
+;
+MSG_CONVERTING_CANCEL_FIRST
+Avsnittet konverteras, avbryt konverteringen först
+;
+MSG_FEED_CONVERTING
+Ett avsnitt i podden konverteras, avbryt först
+;
+MSG_CANCELLING_DL
+Avbryter hämtningen...
+;
+MSG_CANCELLING_CONV
+Avbryter konverteringen...
+;
+MSG_PLAYER_ERR
+Spelaren: %s
+;
+MSG_WELCOME
+%ld poddar. Välkommen.
+;
+MSG_REQ_NO_WORKER
+Kunde inte starta nätprocessen.
+;
+MSG_REQ_NO_PLAYER
+Kunde inte starta spelaren:\n%s
+;
+MSG_UNKNOWN_ERROR
+okänt fel
+;
+MSG_REQ_NO_WINDOW
+Kunde inte öppna fönstret.
+;
+MSG_NEED_MUI
+CurrentPod behöver MUI 3.8 eller senare.\n
+;
+MSG_REQ_REMOVE_TITLE
+Ta bort
+;
+MSG_REQ_REMOVE_GADGETS
+Ta bort|Avbryt
+;
+MSG_REQ_REMOVE_BODY
+Ta bort prenumerationen på\n%s?\n(Hämtade filer ligger kvar på disk.)
+;
+MSG_ABOUT_TITLE
+Om CurrentPod
+;
+MSG_ABOUT_BODY
+\33cCurrentPod %s (%s)\n\nPoddklient för AmigaOS 3.x med MUI.\nKompatibel med Apple Podcasts.\n\nAvkodning: mpega.library (Stéphane Tavenard)\nTLS: AmiSSL\nUtmatning: Paula via audio.device, %s\n\nAvkodare: %s
+;
+MSG_BITS14_WORD
+14 bitar
+;
+MSG_BITS8_WORD
+8 bitar
+;
+MSG_APP_DESCRIPTION
+Poddklient
+;
+MSG_TEST_FILE
+Testfil
+;
+MSG_KHZ12
+12 kHz
+;
+MSG_KHZ24
+24 kHz
+;
+MSG_COUNTRY_SE
+Sverige
+;
+MSG_COUNTRY_NO
+Norge
+;
+MSG_COUNTRY_DK
+Danmark
+;
+MSG_COUNTRY_FI
+Finland
+;
+MSG_COUNTRY_DE
+Tyskland
+;
+MSG_COUNTRY_GB
+Storbritannien
+;
+MSG_COUNTRY_US
+USA
+;
+MSG_COUNTRY_FR
+Frankrike
+;
+MSG_COUNTRY_NL
+Nederländerna
+;
+MSG_COUNTRY_PL
+Polen
+;
+MSG_ERR_FEED_PARSE
+Flödet gick inte att tolka (inte RSS?)
+;
+MSG_ERR_DOWNLOAD
+Hämtningen misslyckades
+;
+MSG_ERR_RENAME_PART
+Kunde inte döpa om .part-filen
+;
+MSG_ERR_NO_BSDSOCKET
+Kunde inte öppna bsdsocket.library: är TCP/IP-stacken igång?
+;
+MSG_ERR_EMPTY_REPLY
+Tomt svar från servern
+;
+MSG_ERR_ABORTED
+Avbruten
+;
+MSG_ERR_URL_TOO_LONG
+Adressen är för lång (över %ld tecken)
+;
+MSG_ERR_CONN_LOST
+Anslutningen bröts
+;
+MSG_ERR_CONN_EARLY
+Anslutningen bröts i förtid
+;
+MSG_ERR_CERT
+Certifikatet kunde inte verifieras (%ld)
+;
+MSG_ERR_REDIRECTS
+För många omdirigeringar
+;
+MSG_ERR_CONNECT
+Kunde inte ansluta till %.40s:%ld
+;
+MSG_ERR_SOCKET
+Kunde inte skapa socket
+;
+MSG_ERR_SEND
+Kunde inte skicka begäran
+;
+MSG_ERR_WRITE_FILE
+Kunde inte skriva till filen (disken full?)
+;
+MSG_ERR_OPEN_DOS
+Kunde inte öppna %.60s (DOS-fel %ld)
+;
+MSG_ERR_BAD_URL
+Ogiltig adress
+;
+MSG_ERR_PROTOCOL
+Okänt protokoll: %.20s
+;
+MSG_ERR_REDIRECT_LONG
+Omdirigeringsadressen är för lång
+;
+MSG_ERR_REDIRECT_LONG_N
+Omdirigeringsadressen är för lång (över %ld tecken)
+;
+MSG_ERR_SERVER_STATUS
+Servern svarade %ld
+;
+MSG_ERR_NO_MEMORY
+Slut på minne
+;
+MSG_ERR_TOO_BIG
+Svaret är för stort
+;
+MSG_ERR_TIMEOUT
+Tidsgräns: servern svarar inte
+;
+MSG_ERR_CHUNKED
+Trasig chunk-kodning
+;
+MSG_ERR_NO_AMISSL
+AmiSSL saknas (amisslmaster.library)
+;
+MSG_ERR_DNS
+DNS-uppslagning misslyckades: %.40s
+;
+MSG_ERR_NO_HTTP
+Inget HTTP-svar
+;
+MSG_ERR_SSL_NEW
+SSL_new misslyckades
+;
+MSG_ERR_TLS
+TLS-handskakningen misslyckades
+;
+MSG_ERR_EMPTY_EPISODE
+Avsnittet är tomt
+;
+MSG_ERR_NOT_8SVX
+Inte en 8SVX-fil
+;
+MSG_ERR_8SVX_CHUNKS
+8SVX-filen saknar VHDR eller BODY
+;
+MSG_ERR_OPEN_FILE
+Kunde inte öppna %.50s
+;
+MSG_ERR_AUDIO_BUSY
+Ljudkanalerna är upptagna (annat program spelar?)
+;
+MSG_ERR_NO_CHIPMEM
+Slut på chipminne
+;
+MSG_ERR_NO_MPEG_IN
+Ingen MPEG-ljudström i %.50s
+;
+MSG_ERR_NO_MPEGA
+mpega.library saknas i LIBS:
+;
+MSG_ERR_NO_MPEG_FILE
+Ingen MPEG-ljudström i filen
+;
+MSG_ERR_ODD_RATE
+Konstig frekvens från avkodaren
+;
+MSG_ERR_RENAME_TMP
+Kunde inte döpa om .tmp-filen
+;
+MSG_ERR_CREATE_FILE
+Kunde inte skapa %.50s
+;
+MSG_ERR_WRITE_DISK
+Kunde inte skriva (disken full?)
+;
+MSG_ERR_WRITE_HEADER
+Kunde inte skriva huvudet
+;
+MSG_MONTH_1
+jan
+;
+MSG_MONTH_2
+feb
+;
+MSG_MONTH_3
+mar
+;
+MSG_MONTH_4
+apr
+;
+MSG_MONTH_5
+maj
+;
+MSG_MONTH_6
+jun
+;
+MSG_MONTH_7
+jul
+;
+MSG_MONTH_8
+aug
+;
+MSG_MONTH_9
+sep
+;
+MSG_MONTH_10
+okt
+;
+MSG_MONTH_11
+nov
+;
+MSG_MONTH_12
+dec
+;
+MSG_DECIMAL_POINT
+,
+;

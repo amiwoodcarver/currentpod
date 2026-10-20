@@ -1,0 +1,672 @@
+;# CurrentPod.cd - katalogbeskrivning (CatComp-format). Inbyggt språk: engelska.
+;# Numren är fasta: lägg nya strängar sist.
+;#
+MSG_BTN_DOWNLOAD (0//)
+Download
+;
+MSG_BTN_PLAY (1//)
+Play
+;
+MSG_BTN_CONVERT (2//)
+Convert
+;
+MSG_COL_STATUS (3//)
+\33bStatus
+;
+MSG_COL_DATE (4//)
+\33bDate
+;
+MSG_COL_EPISODE (5//)
+\33bEpisode
+;
+MSG_COL_LENGTH (6//)
+\33bLength
+;
+MSG_COL_PODCAST (7//)
+\33bPodcast
+;
+MSG_COL_NEW (8//)
+\33bNew
+;
+MSG_COL_NAME (9//)
+\33bName
+;
+MSG_COL_PUBLISHER (10//)
+\33bPublisher
+;
+MSG_ST_PAUSED (11//)
+\33bpaused
+;
+MSG_ST_PLAYING (12//)
+\33bplaying
+;
+MSG_ST_DOWNLOADING_PCT (13//)
+fetching %ld%%
+;
+MSG_ST_DOWNLOADING (14//)
+fetching
+;
+MSG_ST_QUEUED (15//)
+queued
+;
+MSG_ST_CONVERTING (16//)
+conv. %ld%%
+;
+MSG_ST_DOWNLOADED (17//)
+downloaded
+;
+MSG_ST_8SVX_HEARD (18//)
+8SVX, heard
+;
+MSG_ST_HEARD (19//)
+heard
+;
+MSG_ST_HEARD_DELETED (20//)
+heard, deleted
+;
+MSG_ST_ERROR (21//)
+error
+;
+MSG_ST_NEW (22//)
+new
+;
+MSG_ST_NOFILE (23//)
+no file
+;
+MSG_NOTHING_PLAYING (24//)
+Nothing playing
+;
+MSG_INFO_8SVX (25//)
+8SVX %ld Hz mono, 8 bit, no decoding%s
+;
+MSG_INFO_MP3 (26//)
+%ld kbit/s -> %ld Hz %s, %ld bit, quality %s%s%s
+;
+MSG_STEREO (27//)
+stereo
+;
+MSG_MONO (28//)
+mono
+;
+MSG_PAUSE_SUFFIX (29//)
+  PAUSED
+;
+MSG_LAG_SUFFIX (30//)
+  CAN'T KEEP UP
+;
+MSG_Q_AUTO_SHORT (31//)
+auto
+;
+MSG_Q_LOW_SHORT (32//)
+low
+;
+MSG_Q_MEDIUM_SHORT (33//)
+medium
+;
+MSG_Q_HIGH_SHORT (34//)
+high
+;
+MSG_Q_FULL_SHORT (35//)
+full
+;
+MSG_LABEL_VOL (36//)
+Vol
+;
+MSG_GROUP_PLAYER (37//)
+Player
+;
+MSG_TIME_ZERO (38//)
+0:00 / 0:00
+;
+MSG_WIN_SEARCH (39//)
+Search Apple Podcasts
+;
+MSG_LABEL_SEARCH (40//)
+Search
+;
+MSG_LABEL_COUNTRY (41//)
+Country
+;
+MSG_SEARCH_HINT (42//)
+Type a search term and press Return.
+;
+MSG_BTN_SUBSCRIBE (43//)
+Subscribe
+;
+MSG_BTN_CLOSE (44//)
+Close
+;
+MSG_BTN_CANCEL (45//)
+Cancel
+;
+MSG_SEARCHING (46//)
+Searching...
+;
+MSG_SEARCH_FAILED (47//)
+Search failed: %s
+;
+MSG_HITS_SHORT (48//)
+%ld hits
+;
+MSG_HITS_STATUS (49//)
+%ld hits in Apple Podcasts
+;
+MSG_SUBSCRIBING (50//)
+Subscribing, the feed is fetched in the background.
+;
+MSG_SEARCHING_FOR (51//)
+Searching Apple Podcasts for \"%.60s\"...
+;
+MSG_LOOKING_UP (52//)
+Looking up Apple ID %s...
+;
+MSG_APPLE_UNKNOWN_ID (53//)
+Apple does not know that ID
+;
+MSG_LOOKUP_FAILED (54//)
+Lookup failed: %s
+;
+MSG_NO_ID_IN_LINK (55//)
+No podcast ID found in the link
+;
+MSG_ALREADY_SUBSCRIBED (56//)
+You already subscribe to %.60s
+;
+MSG_WIN_URL (57//)
+Subscribe to address
+;
+MSG_URL_PROMPT (58//)
+RSS address or link from Apple Podcasts:
+;
+MSG_WIN_INFO (59//)
+Information
+;
+MSG_NO_DESC (60//)
+(no description)
+;
+MSG_NOT_DOWNLOADED (61//)
+(not downloaded)
+;
+MSG_NEVER (62//)
+never
+;
+MSG_INFO_EPISODE_FMT (63//)
+\33b%.150s\33n\n%s  %s  %s\n%s\n\n%.3500s\n\n\33iAddress:\33n %.400s\n\33iFile:\33n %.200s
+;
+MSG_INFO_FEED_FMT (64//)
+\33b%.150s\33n\n%.100s\n\n%.3000s\n\n\33iFeed:\33n %.400s\n\33iWeb:\33n %.200s\n\33iUpdated:\33n %s\n\33iApple ID:\33n %ld\n%s%s
+;
+MSG_INFO_LAST_ERROR (65//)
+\33iLast error:\33n 
+;
+MSG_INFO_TITLE_PODCAST (66//)
+Podcast
+;
+MSG_MENU_PROJECT (67//)
+Project
+;
+MSG_MENU_ABOUT (68//)
+About CurrentPod...
+;
+MSG_MENU_SAVE_SETTINGS (69//)
+Save settings
+;
+MSG_MENU_QUIT (70//)
+Quit
+;
+MSG_MENU_PODCAST (71//)
+Podcast
+;
+MSG_MENU_SEARCH (72//)
+Search Apple Podcasts...
+;
+MSG_MENU_SUBSCRIBE_URL (73//)
+Subscribe to address...
+;
+MSG_MENU_UPDATE (74//)
+Update
+;
+MSG_MENU_UPDATE_ALL (75//)
+Update all
+;
+MSG_MENU_INFORMATION (76//)
+Information...
+;
+MSG_MENU_REMOVE_FEED (77//)
+Remove subscription
+;
+MSG_MENU_EPISODE (78//)
+Episode
+;
+MSG_MENU_PLAY (79//)
+Play
+;
+MSG_MENU_PAUSE (80//)
+Pause / resume
+;
+MSG_MENU_STOP (81//)
+Stop
+;
+MSG_MENU_DOWNLOAD (82//)
+Download
+;
+MSG_MENU_DOWNLOAD_NEW (83//)
+Download all new
+;
+MSG_MENU_CANCEL_DL (84//)
+Cancel download
+;
+MSG_MENU_CONVERT (85//)
+Convert to 8SVX
+;
+MSG_MENU_CANCEL_CONV (86//)
+Cancel conversion
+;
+MSG_MENU_DELETE_MP3 (87//)
+Delete MP3, keep 8SVX
+;
+MSG_MENU_MARK (88//)
+Mark as heard/unheard
+;
+MSG_MENU_DELETE_FILE (89//)
+Delete downloaded file
+;
+MSG_MENU_OPEN_LINK (90//)
+Open web page
+;
+MSG_MENU_SETTINGS (91//)
+Settings
+;
+MSG_MENU_QUALITY (92//)
+Quality
+;
+MSG_MENU_Q_AUTO (93//)
+Automatic
+;
+MSG_MENU_Q_LOW (94//)
+Low (mono 11 kHz)
+;
+MSG_MENU_Q_MEDIUM (95//)
+Medium (mono 22 kHz)
+;
+MSG_MENU_Q_HIGH (96//)
+High (stereo 22 kHz)
+;
+MSG_MENU_Q_FULL (97//)
+Full (stereo 44 kHz)
+;
+MSG_MENU_CONVERSION (98//)
+Conversion
+;
+MSG_MENU_CV_LOW (99//)
+12 kHz, smaller file
+;
+MSG_MENU_CV_MEDIUM (100//)
+24 kHz, better sound
+;
+MSG_MENU_BITS14 (101//)
+14-bit audio
+;
+MSG_MENU_AUTONEXT (102//)
+Play next automatically
+;
+MSG_STARTING (103//)
+Starting %.70s
+;
+MSG_DOWNLOAD_FIRST (104//)
+Download the episode first (Download button or Amiga-D)
+;
+MSG_NOT_MP3 (105//)
+The episode is not MP3 and cannot be played on the Amiga
+;
+MSG_CONVERTING_WAIT (106//)
+The episode is being converted, wait or cancel
+;
+MSG_CONVERTER_MISSING (107//)
+The converter could not be started (mpega.library missing?)
+;
+MSG_CONVERSION_BUSY (108//)
+A conversion is already running: %.50s
+;
+MSG_ALREADY_CONVERTED (109//)
+The episode is already converted
+;
+MSG_CONVERTING_TO (110//)
+Converting to 8SVX: %.55s
+;
+MSG_CONVERSION_FAILED (111//)
+Conversion failed: %s
+;
+MSG_CONVERTED (112//)
+Converted: %.60s
+;
+MSG_CONVERTING_PCT (113//)
+Converting %ld %% (%s): %.45s
+;
+MSG_DL_PROGRESS_TOTAL (114//)
+Fetching %s / %s: %.50s
+;
+MSG_DL_PROGRESS (115//)
+Fetching %s: %.50s
+;
+MSG_DL_STARTED (116//)
+Fetching: %.60s
+;
+MSG_DL_DONE (117//)
+Fetched: %.60s
+;
+MSG_DL_FAILED (118//)
+Download failed: %s
+;
+MSG_EPISODE_WORD (119//)
+episode
+;
+MSG_PODCAST_WORD (120//)
+podcast
+;
+MSG_FEED_FETCHING_FOR (121//)
+Fetching the feed for %.60s...
+;
+MSG_FEED_FETCHING (122//)
+Fetching the feed %.60s...
+;
+MSG_FEED_PROGRESS (123//)
+Fetching the feed%s%.50s: %s%s
+;
+MSG_FOR_WORD (124//)
+ for 
+;
+MSG_FEED_NO_CHANGES (125//)
+%.60s: no changes
+;
+MSG_FEED_NEW_EPISODES (126//)
+%.60s: %ld new episodes
+;
+MSG_FEED_NEW_TRUNC (127//)
+%.40s: %ld new episodes (large feed, newest %ld)
+;
+MSG_FETCHING_NAME (128//)
+(fetching...)
+;
+MSG_UNNAMED_PODCAST (129//)
+(unnamed podcast)
+;
+MSG_SETTINGS_SAVED (130//)
+Settings saved
+;
+MSG_QUALITY_NEXT (131//)
+Quality applies from the next episode started
+;
+MSG_CONV_SETTING (132//)
+New conversions are made in %s
+;
+MSG_MP3_DELETED (133//)
+MP3 file deleted, 8SVX file kept
+;
+MSG_CONVERTING_CANCEL_FIRST (134//)
+The episode is being converted, cancel the conversion first
+;
+MSG_FEED_CONVERTING (135//)
+An episode in this podcast is being converted, cancel first
+;
+MSG_CANCELLING_DL (136//)
+Cancelling the download...
+;
+MSG_CANCELLING_CONV (137//)
+Cancelling the conversion...
+;
+MSG_PLAYER_ERR (138//)
+Player: %s
+;
+MSG_WELCOME (139//)
+%ld podcasts. Welcome.
+;
+MSG_REQ_NO_WORKER (140//)
+Could not start the network process.
+;
+MSG_REQ_NO_PLAYER (141//)
+Could not start the player:\n%s
+;
+MSG_UNKNOWN_ERROR (142//)
+unknown error
+;
+MSG_REQ_NO_WINDOW (143//)
+Could not open the window.
+;
+MSG_NEED_MUI (144//)
+CurrentPod needs MUI 3.8 or later.\n
+;
+MSG_REQ_REMOVE_TITLE (145//)
+Remove
+;
+MSG_REQ_REMOVE_GADGETS (146//)
+Remove|Cancel
+;
+MSG_REQ_REMOVE_BODY (147//)
+Remove the subscription to\n%s?\n(Downloaded files stay on disk.)
+;
+MSG_ABOUT_TITLE (148//)
+About CurrentPod
+;
+MSG_ABOUT_BODY (149//)
+\33cCurrentPod %s (%s)\n\nPodcast client for AmigaOS 3.x with MUI.\nCompatible with Apple Podcasts.\n\nDecoding: mpega.library (Stéphane Tavenard)\nTLS: AmiSSL\nOutput: Paula via audio.device, %s\n\nDecoder: %s
+;
+MSG_BITS14_WORD (150//)
+14 bits
+;
+MSG_BITS8_WORD (151//)
+8 bits
+;
+MSG_APP_DESCRIPTION (152//)
+Podcast client
+;
+MSG_TEST_FILE (153//)
+Test file
+;
+MSG_KHZ12 (154//)
+12 kHz
+;
+MSG_KHZ24 (155//)
+24 kHz
+;
+MSG_COUNTRY_SE (156//)
+Sweden
+;
+MSG_COUNTRY_NO (157//)
+Norway
+;
+MSG_COUNTRY_DK (158//)
+Denmark
+;
+MSG_COUNTRY_FI (159//)
+Finland
+;
+MSG_COUNTRY_DE (160//)
+Germany
+;
+MSG_COUNTRY_GB (161//)
+United Kingdom
+;
+MSG_COUNTRY_US (162//)
+USA
+;
+MSG_COUNTRY_FR (163//)
+France
+;
+MSG_COUNTRY_NL (164//)
+Netherlands
+;
+MSG_COUNTRY_PL (165//)
+Poland
+;
+MSG_ERR_FEED_PARSE (166//)
+The feed could not be parsed (not RSS?)
+;
+MSG_ERR_DOWNLOAD (167//)
+Download failed
+;
+MSG_ERR_RENAME_PART (168//)
+Could not rename the .part file
+;
+MSG_ERR_NO_BSDSOCKET (169//)
+Could not open bsdsocket.library: is the TCP/IP stack running?
+;
+MSG_ERR_EMPTY_REPLY (170//)
+Empty reply from the server
+;
+MSG_ERR_ABORTED (171//)
+Cancelled
+;
+MSG_ERR_URL_TOO_LONG (172//)
+The address is too long (over %ld characters)
+;
+MSG_ERR_CONN_LOST (173//)
+Connection lost
+;
+MSG_ERR_CONN_EARLY (174//)
+Connection closed early
+;
+MSG_ERR_CERT (175//)
+The certificate could not be verified (%ld)
+;
+MSG_ERR_REDIRECTS (176//)
+Too many redirects
+;
+MSG_ERR_CONNECT (177//)
+Could not connect to %.40s:%ld
+;
+MSG_ERR_SOCKET (178//)
+Could not create a socket
+;
+MSG_ERR_SEND (179//)
+Could not send the request
+;
+MSG_ERR_WRITE_FILE (180//)
+Could not write to the file (disk full?)
+;
+MSG_ERR_OPEN_DOS (181//)
+Could not open %.60s (DOS error %ld)
+;
+MSG_ERR_BAD_URL (182//)
+Invalid address
+;
+MSG_ERR_PROTOCOL (183//)
+Unknown protocol: %.20s
+;
+MSG_ERR_REDIRECT_LONG (184//)
+The redirect address is too long
+;
+MSG_ERR_REDIRECT_LONG_N (185//)
+The redirect address is too long (over %ld characters)
+;
+MSG_ERR_SERVER_STATUS (186//)
+The server replied %ld
+;
+MSG_ERR_NO_MEMORY (187//)
+Out of memory
+;
+MSG_ERR_TOO_BIG (188//)
+The reply is too large
+;
+MSG_ERR_TIMEOUT (189//)
+Timeout: the server does not respond
+;
+MSG_ERR_CHUNKED (190//)
+Broken chunked encoding
+;
+MSG_ERR_NO_AMISSL (191//)
+AmiSSL is missing (amisslmaster.library)
+;
+MSG_ERR_DNS (192//)
+DNS lookup failed: %.40s
+;
+MSG_ERR_NO_HTTP (193//)
+No HTTP reply
+;
+MSG_ERR_SSL_NEW (194//)
+SSL_new failed
+;
+MSG_ERR_TLS (195//)
+The TLS handshake failed
+;
+MSG_ERR_EMPTY_EPISODE (196//)
+The episode is empty
+;
+MSG_ERR_NOT_8SVX (197//)
+Not an 8SVX file
+;
+MSG_ERR_8SVX_CHUNKS (198//)
+The 8SVX file lacks VHDR or BODY
+;
+MSG_ERR_OPEN_FILE (199//)
+Could not open %.50s
+;
+MSG_ERR_AUDIO_BUSY (200//)
+The audio channels are busy (another program playing?)
+;
+MSG_ERR_NO_CHIPMEM (201//)
+Out of chip memory
+;
+MSG_ERR_NO_MPEG_IN (202//)
+No MPEG audio stream in %.50s
+;
+MSG_ERR_NO_MPEGA (203//)
+mpega.library is missing in LIBS:
+;
+MSG_ERR_NO_MPEG_FILE (204//)
+No MPEG audio stream in the file
+;
+MSG_ERR_ODD_RATE (205//)
+Odd sample rate from the decoder
+;
+MSG_ERR_RENAME_TMP (206//)
+Could not rename the .tmp file
+;
+MSG_ERR_CREATE_FILE (207//)
+Could not create %.50s
+;
+MSG_ERR_WRITE_DISK (208//)
+Could not write (disk full?)
+;
+MSG_ERR_WRITE_HEADER (209//)
+Could not write the header
+;
+MSG_MONTH_1 (210//)
+Jan
+;
+MSG_MONTH_2 (211//)
+Feb
+;
+MSG_MONTH_3 (212//)
+Mar
+;
+MSG_MONTH_4 (213//)
+Apr
+;
+MSG_MONTH_5 (214//)
+May
+;
+MSG_MONTH_6 (215//)
+Jun
+;
+MSG_MONTH_7 (216//)
+Jul
+;
+MSG_MONTH_8 (217//)
+Aug
+;
+MSG_MONTH_9 (218//)
+Sep
+;
+MSG_MONTH_10 (219//)
+Oct
+;
+MSG_MONTH_11 (220//)
+Nov
+;
+MSG_MONTH_12 (221//)
+Dec
+;
+MSG_DECIMAL_POINT (222//)
+.
+;

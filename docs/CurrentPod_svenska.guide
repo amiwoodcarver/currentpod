@@ -1,0 +1,1264 @@
+@DATABASE CurrentPod.guide
+@$VER: CurrentPod.guide 1.0 (18.10.2026)
+@(C) 2026 amiwoodcarver
+@AUTHOR amiwoodcarver
+@INDEX Index
+@WIDTH 76
+
+@NODE Main "CurrentPod 1.0 - Innehåll"
+@NEXT Introduktion
+@TITLE "CurrentPod 1.0 - Innehåll"
+
+   +--------------------------------------------------------------------+
+   |                                                                    |
+   |      @{b}C u r r e n t P o d   1 . 0@{ub}                                 |
+   |      Poddklient för Workbench 3.x, kompatibel med Apple Podcasts   |
+   |                                                                    |
+   |      En Amiga 1200, en Blizzard och 2026 års poddar.               |
+   |                                                                    |
+   +--------------------------------------------------------------------+
+
+   @{b}Komma igång@{ub}
+
+      @{" Introduktion          " link Introduktion}  Vad CurrentPod är och inte är
+      @{" Systemkrav            " link Systemkrav}  Vad som behövs i maskinen
+      @{" Installation          " link Installation}  Var allt ligger
+      @{" Snabbstart            " link Snabbstart}  Första podden på fem minuter
+
+   @{b}Använda programmet@{ub}
+
+      @{" Huvudfönstret         " link Huvudfonstret}  Listor, spelarpanel och menyer
+      @{" Prenumerera           " link Prenumerera}  Adress, Apple-länk eller sökning
+      @{" Söka i katalogen      " link Katalog}  Apple Podcasts-katalogen
+      @{" Uppdatera flöden      " link Uppdatera}  Hämta nya avsnitt
+      @{" Avsnittslistan        " link Avsnitt}  Statuskolumnen och avsnittsinfo
+      @{" Hämta avsnitt         " link Hamta}  Hämta först, spela sedan
+      @{" Uppspelning           " link Uppspelning}  MP3 på en 68030: så funkar det
+      @{" Konvertera            " link Konvertera}  8SVX för maskiner utan MP3-kraft
+      @{" Prestanda             " link Prestanda}  Uppmätta siffror och vad de betyder
+
+   @{b}Anpassa@{ub}
+
+      @{" Inställningar         " link Installningar}  Menyn Inställningar och prefs-filen
+      @{" Tooltypes             " link Tooltypes}  Ikonens tooltypes och Shell-argument
+      @{" Kortkommandon         " link Kortkommandon}  Tangentbordet
+      @{" Filer och format      " link Filer}  Vad som ligger i programlådan
+
+   @{b}När det strular@{ub}
+
+      @{" Felsökning            " link Felsokning}  Vanliga felmeddelanden
+      @{" Kända problem         " link KandaProblem}  Det som inte går (än)
+      @{" Apple Podcasts-detaljer" link AppleDetaljer}  Hur kompatibiliteten fungerar
+
+   @{b}Övrigt@{ub}
+
+      @{" Planerat              " link Planerat}  Det som inte hann med i 1.0
+      @{" Teknik                " link Teknik}  Hur programmet är byggt
+      @{" Licens och tack       " link Licens}  Bibliotek som används
+      @{" Index                 " link Index}  Alfabetiskt register
+
+@ENDNODE
+
+@NODE Introduktion "Introduktion"
+@TOC Main
+@PREV Main
+@NEXT Systemkrav
+@TITLE "CurrentPod - Introduktion"
+
+   @{b}Vad är CurrentPod?@{ub}
+
+   CurrentPod är en poddklient (podcatcher) för AmigaOS 3.0 och senare
+   med ett MUI-gränssnitt. Den prenumererar på poddflöden (RSS 2.0 med
+   Apples itunes:-utökning, eller Atom), hämtar avsnitt över HTTP och
+   HTTPS och spelar upp dem direkt på Amigan med mpega.library, rakt
+   ut genom Paula i 14 bitar.
+
+   Programmet är ett vanligt MUI-program med menyer, tooltypes och ett
+   par fönster, skrivet i C 2026 men tänkt att kännas hemma på en
+   Workbench 3.1 från 1997. Det använder de bibliotek som tillkommit
+   sedan dess där det behövs: AmiSSL för krypterade anslutningar och
+   mpega.library (1998) för avkodningen.
+
+   @{b}Kompatibel med Apple Podcasts@{ub}
+
+   "Kompatibel med Apple Podcasts" betyder tre saker:
+
+      1. Du kan @{"söka" link Katalog} i Apple Podcasts-katalogen direkt i
+         programmet, i det land du valt, och prenumerera på en träff
+         med ett klick. Katalogen frågas via Apples öppna sökgränssnitt
+         (iTunes Search API), som inte kräver något konto.
+
+      2. Du kan @{"klistra in en länk" link Prenumerera} från Apple Podcasts
+         (podcasts.apple.com/...). CurrentPod slår upp podd-ID:t och
+         hittar det riktiga RSS-flödet själv.
+
+      3. Flöden tolkas med samma regler som Apple använder: itunes:-
+         taggar för omslag, längd, säsong, avsnittsnummer, avsnittstyp
+         (full/trailer/bonus) och explicit-markering.
+
+   Det betyder @{i}inte@{ui} att CurrentPod loggar in med Apple-ID, synkar
+   lyssningsposition mot Apples servrar eller spelar betalpoddar.
+
+   @{b}Vad är det inte?@{ub}
+
+   CurrentPod är inte en allmän MP3-spelare. Den spelar de avsnitt den
+   känner till, och kommer ihåg var du var. För lösa MP3-filer finns
+   HippoPlayer med mpega-pluginen eller AmigaAMP.
+
+@ENDNODE
+
+@NODE Systemkrav "Systemkrav"
+@TOC Main
+@PREV Introduktion
+@NEXT Installation
+@TITLE "CurrentPod - Systemkrav"
+
+   @{b}Minimum@{ub}
+
+      - AmigaOS 3.0 eller senare (Kickstart 39+)
+      - 68020 eller bättre, 2 MB fast RAM, 1 MB ledigt chipminne
+        (ljudbuffertarna tar 192 KB chip)
+      - MUI 3.8 eller senare (på den här maskinen MUI 3.9)
+      - En TCP/IP-stack med bsdsocket.library (i emulatorn: FS-UAE:s
+        inbyggda; på riktig hårdvara AmiTCP, Miami, Genesis, Roadshow)
+      - AmiSSL 4.x eller 5.x (amisslmaster.library) för HTTPS, vilket
+        Apple och de flesta poddservrar kräver
+      - mpega.library 2.0 eller senare i LIBS: (för uppspelning)
+
+   @{b}Rekommenderat@{ub}
+
+      - 68030 50 MHz med FPU, helst mer. Se @{"Prestanda" link Prestanda}.
+      - En hårddisk med plats: avsnitt är 20-80 MB styck.
+
+   @{b}Vad orkar maskinen?@{ub}
+
+   MP3-avkodning (layer III) är det tunga momentet. CurrentPod har fyra
+   kvalitetsnivåer och väljer automatiskt den högsta som avkodaren
+   hinner med:
+
+      Låg      mono, 11-12 kHz, mpega-kvalitet 0
+      Mellan   mono, 22-24 kHz, kvalitet 0
+      Hög      stereo, 22-24 kHz, kvalitet 1
+      Full     stereo, 44-48 kHz, kvalitet 2
+
+   Vid tal är skillnaden mellan Mellan och Full liten. Vad de olika
+   maskinerna klarar står under @{"Prestanda" link Prestanda}.
+
+   Hämtning och tolkning av flöden går bra på vilken 020 som helst;
+   det är bara uppspelningen som vill ha kraft.
+
+@ENDNODE
+
+@NODE Installation "Installation"
+@TOC Main
+@PREV Systemkrav
+@NEXT Snabbstart
+@TITLE "CurrentPod - Installation"
+
+   På den här maskinen är CurrentPod redan installerat i
+   @{b}Work:Internet/CurrentPod@{ub}, och mpega.library ligger i LIBS:. Det
+   finns inget installationsskript: programlådan är självständig.
+
+   @{b}För hand på en annan Amiga@{ub}
+
+   Kopiera lådan CurrentPod dit du vill ha den. Lägg mpega.library
+   (Aminet util/libs/mpega_library.lha; ta varianten för din processor,
+   020FPU för 030 med FPU, 060FPU för 060) i LIBS: under namnet
+   mpega.library. Installera AmiSSL från Aminet med dess eget skript.
+
+   Programmet hittar allt via PROGDIR:, så ingen assign behövs. Vid
+   första starten skapas PROGDIR:Feeds (databasen) och PROGDIR:Avsnitt
+   (hämtade filer). Vill du ha avsnitten på en annan partition: sätt
+   tooltypen DOWNLOADDIR.
+
+   @{b}Avinstallation@{ub}
+
+   Ta bort lådan. CurrentPod skriver ingenting annat någon annanstans,
+   förutom ENV:MUI/CURRENTPOD.cfg om du sparat MUI-inställningar för
+   programmet.
+
+@ENDNODE
+
+@NODE Snabbstart "Snabbstart"
+@TOC Main
+@PREV Installation
+@NEXT Huvudfonstret
+@TITLE "CurrentPod - Snabbstart"
+
+   Så här får du igång din första podd. Nätet ska vara igång, till
+   exempel ska IBrowse kunna visa en sida.
+
+      1. Dubbelklicka på CurrentPod-ikonen i Work:Internet/CurrentPod.
+
+      2. Välj @{b}Podd -> Sök i Apple Podcasts...@{ub} (eller tryck Amiga-F).
+         Skriv ett sökord, till exempel "retro hour", välj land i
+         cykelknappen och tryck Retur. Efter en stund visas upp till
+         50 träffar med namn, utgivare och antal avsnitt. Sökningen går
+         över HTTPS och tar 20-40 sekunder på en 030.
+
+      3. Dubbelklicka på en träff (eller markera och klicka
+         @{b}Prenumerera@{ub}). Podden hamnar i vänsterlistan och flödet hämtas
+         i bakgrunden. The Retro Hours flöde är 1,7 MB och tar ett par
+         minuter över HTTPS på en 030; statusraden visar hur det går.
+
+      4. Markera ett avsnitt i högerlistan och klicka @{b}Hämta@{ub} under
+         listan (eller tryck Amiga-D). Förloppet syns i statuskolumnen
+         och statusraden. Det tar sin tid: räkna med 30-35 kB/s över
+         HTTPS, en dryg timme för ett två timmar långt avsnitt. Gör
+         något annat under tiden, hämtningen stör inte.
+
+      5. När avsnittet är hämtat står det "hämtad" i statuskolumnen och
+         knapparna @{b}Spela@{ub} och @{b}Konvertera@{ub} tänds. Klicka Spela (eller
+         dubbelklicka på raden). Mellanslag pausar, pil höger hoppar 30
+         sekunder framåt, pil vänster 15 bakåt.
+
+      6. Hackar ljudet orkar maskinen inte avkoda MP3 i realtid. Klicka
+         då @{b}Konvertera@{ub}: avsnittet görs om till en 8SVX-fil i bakgrunden,
+         och Spela använder sedan den i stället. Se @{"Konvertera" link Konvertera}.
+
+   Nästa gång du startar programmet kommer det ihåg var du var i
+   avsnittet och börjar där (minus tre sekunder) om du spelar det igen.
+
+   @{b}Tips@{ub}: har du en adress till ett flöde kan du hoppa över sökningen
+   och använda @{b}Podd -> Prenumerera på adress...@{ub} (Amiga-S).
+
+@ENDNODE
+
+@NODE Huvudfonstret "Huvudfönstret"
+@TOC Main
+@PREV Snabbstart
+@NEXT Prenumerera
+@TITLE "CurrentPod - Huvudfönstret"
+
+   Huvudfönstret har tre delar. Delningen mellan vänster och höger
+   lista kan dras med MUI:s balk, och fönstrets storlek och läge
+   sparas med MUI-inställningarna (snapshot i MUI-menyn).
+
+   +--------------------+----------------------------------------------+
+   | Podd           Nya | Status   Datum        Avsnitt          Längd |
+   |                    |                                              |
+   | The Retro Hou   50 | ny       16 okt 2026  553. Gremlin G..  2:04 |
+   | Kodsnack         3 | hämtad   10 okt 2026  552. GamesMast..  1:48 |
+   |                    | 8SVX      2 okt 2026  551. Streets o..  1:18 |
+   |                    |                                              |
+   |                    +----------------------------------------------+
+   |                    |   [ Hämta ]      [ Spela ]     [ Konvertera ] |
+   +--------------------+----------------------------------------------+
+   | [|<] [<<] [ > ] [||] [>>] [>|] 553. Gremlin...  12:31 / 2:04:16   |
+   | [===========|---------------------------------]  Vol [=======|-] |
+   |         128 kbit/s -> 24000 Hz mono, 14 bit, kvalitet mellan      |
+   +-------------------------------------------------------------------+
+   | Hämtar: 552. GamesMaster...  14,2 MB / 31,8 MB                    |
+   +-------------------------------------------------------------------+
+
+   @{b}Poddlistan (vänster)@{ub}
+
+   En rad per prenumeration, med antal ohörda avsnitt i högerkanten.
+   Fet stil: flödet har nya avsnitt sedan du tittade sist. Kursiv
+   stil: flödet uppdateras just nu. Ett "!" i högerkolumnen betyder att
+   senaste uppdateringen misslyckades; felet syns i statusraden och i
+   @{b}Podd -> Information...@{ub}.
+
+   @{b}Avsnittslistan (höger)@{ub}
+
+   Avsnitten för den valda podden, nyast överst (äldst överst för
+   poddar som markerat sig som "serial"). Kolumnerna är status, datum,
+   titel och längd. Se @{"Avsnittslistan" link Avsnitt} för statuskolumnen.
+
+   @{b}Knappraden under avsnittslistan@{ub}
+
+   De tre knapparna följer det markerade avsnittets tillstånd:
+
+      Hämta       Tänd tills avsnittet är hämtat. Lägger det i hämtkön.
+      Spela       Tänd när avsnittet är hämtat. Spelar 8SVX-filen om
+                  det finns en, annars MP3-filen direkt.
+      Konvertera  Tänd när avsnittet är hämtat och inte konverterat.
+                  Gör en 8SVX-fil i bakgrunden; släcks när den är klar
+                  eller medan en annan konvertering pågår.
+
+   Dubbelklick på en rad betyder Spela om avsnittet är hämtat, annars
+   Hämta. Ett avsnitt som inte är hämtat kan inte spelas: knappen
+   Spela i spelarpanelen säger då till i statusraden.
+
+   @{b}Spelarpanelen@{ub}
+
+      [|<]  Föregående hämtade avsnitt i listan (eller börja om, om
+            mer än 10 sekunder spelats)
+      [<<]  15 sekunder bakåt
+      [ > ] Spela markerat avsnitt (måste vara hämtat)
+      [||]  Paus / fortsätt
+      [>>]  30 sekunder framåt
+      [>|]  Nästa hämtade avsnitt
+
+   Mätaren visar positionen. Volymreglaget regleras digitalt i
+   avkodaren, så 14-bitarsläget behåller full upplösning. Raden under
+   visar strömmens bitrate, vad avkodaren levererar, bitdjup och vald
+   kvalitetsnivå. Står det HINNER INTE MED ligger avkodaren mer än
+   1,5 sekund efter; se @{"Prestanda" link Prestanda}.
+
+   @{b}Statusraden@{ub}
+
+   Visar pågående hämtning med överförd mängd, eller senaste händelse.
+
+   @{b}Menyer@{ub}
+
+   @{b}Projekt@{ub}
+      Om CurrentPod...        A-?
+      Spara inställningar          Skriver PROGDIR:CurrentPod.prefs
+      Avsluta                 A-Q  (sparar också inställningarna)
+
+   @{b}Podd@{ub}
+      Sök i Apple Podcasts... A-F
+      Prenumerera på adress.. A-S  RSS-adress eller Apple-länk
+      Uppdatera               A-U  Den markerade podden
+      Uppdatera alla          A-A
+      Information...          A-I  Beskrivning, adresser, senaste fel
+      Ta bort prenumeration        Hämtade filer ligger kvar
+
+   @{b}Avsnitt@{ub}
+      Spela                   A-P
+      Paus / fortsätt
+      Stoppa
+      Hämta                   A-D
+      Hämta alla nya               Alla ohörda avsnitt i podden
+      Avbryt hämtning
+      Konvertera till 8SVX    A-K  Se Konvertera
+      Avbryt konvertering
+      Radera MP3, behåll 8SVX      Sparar disk efter konvertering
+      Markera som hörd/ohörd  A-M
+      Radera hämtad fil            Både MP3 och 8SVX; avsnittet
+                                   står kvar i listan
+      Information...          A-E  Hela beskrivningen
+      Öppna webbsidan              I IBrowse (tooltypen BROWSER)
+
+   @{b}Inställningar@{ub}
+      Kvalitet                     Automatisk / Låg / Mellan / Hög / Full
+      Konvertering                 12 kHz (mindre fil) / 24 kHz
+      14-bitars ljud               Av: 8 bitar, två Paula-kanaler
+      Spela nästa automatiskt
+
+@ENDNODE
+
+@NODE Prenumerera "Prenumerera"
+@TOC Main
+@PREV Huvudfonstret
+@NEXT Katalog
+@TITLE "CurrentPod - Prenumerera"
+
+   Det finns två sätt att lägga till en podd.
+
+   @{b}1. Sök i Apple Podcasts-katalogen@{ub}
+
+   Det enklaste. Se @{"Söka i katalogen" link Katalog}.
+
+   @{b}2. Klistra in en länk eller RSS-adress@{ub}
+
+   Välj @{b}Podd -> Prenumerera på adress...@{ub} eller tryck Amiga-S. Fältet
+   tar emot vilken som helst av följande:
+
+      https://podcasts.apple.com/se/podcast/kodsnack/id561631498
+      https://itunes.apple.com/se/podcast/id561631498
+      https://feeds.example.se/kodsnack.xml
+      feed://feeds.example.se/kodsnack.xml
+      podcast://feeds.example.se/kodsnack.xml
+      feeds.example.se/kodsnack.xml   (https:// läggs till)
+
+   Apple-länkar innehåller ett podd-ID (siffrorna efter "id"). CurrentPod
+   slår upp ID:t hos Apple och får tillbaka adressen till det riktiga
+   RSS-flödet, som sedan hämtas.
+
+   Adressen kan klistras in med Amiga-V om den kopierats i IBrowse.
+
+   @{b}Vad som händer sedan@{ub}
+
+   Podden dyker upp i listan som "(hämtar...)" och flödet hämtas i
+   bakgrunden. När det är klart byts namnet mot flödets titel och
+   avsnitten fylls på, som mest så många som "MAXEPISODES" anger
+   (förval 50). Poddens namn, utgivare, beskrivning, webbsida, omslags-
+   adress och språk sparas i PROGDIR:Feeds.
+
+   Flöden större än 3 MB (LINUX Unplugged med 689 avsnitt är 9 MB)
+   läses bara till 3 MB, vilket räcker till de 200 nyaste avsnitten.
+   Statusraden säger då "stort flöde, de 50 nyaste".
+
+   Går hämtningen fel står podden kvar med "!" och kan uppdateras igen
+   med Amiga-U när felet är avhjälpt, eller tas bort.
+
+@ENDNODE
+
+@NODE Katalog "Söka i katalogen"
+@TOC Main
+@PREV Prenumerera
+@NEXT Uppdatera
+@TITLE "CurrentPod - Söka i Apple Podcasts"
+
+   @{b}Podd -> Sök i Apple Podcasts...@{ub} (Amiga-F) öppnar sökfönstret.
+
+   +-----------------------------------------------------------------+
+   | Sök: [retro hour                           ]  Land: [Sverige  ] |
+   +-----------------------------------------------------------------+
+   | Namn                           Utgivare                 Avsnitt |
+   | The Retro Hour (Retro Gaming.. The Retro Hour              500  |
+   | Retro VGM Revival Hour         Retro VGM Revival Hour       95  |
+   | ...                                                             |
+   +-----------------------------------------------------------------+
+   | 3 träffar                                                       |
+   | [Prenumerera]                                        [Stäng]    |
+   +-----------------------------------------------------------------+
+
+   @{b}Sökfältet@{ub}
+
+   Sökningen skickas till Apples sökgränssnitt när du trycker Retur.
+   Apple söker ungefär som i Apple Podcasts-appen: i titel, utgivare
+   och beskrivning. Svenska tecken fungerar (CurrentPod översätter
+   från ISO-8859-1 till UTF-8 och URL-kodar). Som mest 50 träffar
+   visas.
+
+   @{b}Land@{ub}
+
+   Katalogen är uppdelad per land, och en podd som bara finns i den
+   brittiska katalogen hittas inte om du söker i den svenska. Byt land
+   i cykelknappen; valet sparas i inställningarna.
+
+   @{b}Träfflistan@{ub}
+
+   Poddar som Apple markerat som "explicit" visas med [E]. Dubbelklick
+   på en rad prenumererar, liksom knappen @{b}Prenumerera@{ub}. Fönstret kan
+   stå öppet medan du prenumererar på flera.
+
+@ENDNODE
+
+@NODE Uppdatera "Uppdatera flöden"
+@TOC Main
+@PREV Katalog
+@NEXT Avsnitt
+@TITLE "CurrentPod - Uppdatera flöden"
+
+   Ett flöde uppdateras genom att RSS-filen hämtas på nytt och
+   jämförs med databasen. Nya avsnitt läggs till överst och markeras
+   som nya; avsnitt som redan finns behåller status och position.
+
+   Amiga-U uppdaterar markerad podd, Amiga-A alla. Uppdateringen sker
+   i bakgrunden, en podd i taget, och du kan fortsätta lyssna.
+
+   @{b}Sparsamhet@{ub}
+
+   CurrentPod skickar If-Modified-Since och If-None-Match (ETag) om
+   servern gav sådana. Ett oförändrat flöde kostar då bara några
+   hundra byte och svaret "inga ändringar". Som mest tolkas de 300
+   första avsnitten i ett flöde.
+
+   @{b}Omdirigeringar@{ub}
+
+   Upp till sex omdirigeringar (301/302/303/307/308) följs, även
+   mellan http och https.
+
+   @{b}Vad som tolkas@{ub}
+
+   RSS 2.0 och Atom 1.0. Ur varje avsnitt tas:
+
+      title, pubDate, enclosure (adress, storlek, typ), guid, link,
+      description eller content:encoded (HTML tas bort; p och br blir
+      radbrytningar), itunes:title, itunes:duration, itunes:episode,
+      itunes:season, itunes:episodeType, itunes:explicit, itunes:image,
+      itunes:summary, media:content (om ingen enclosure finns)
+
+   Flöden i UTF-8 översätts till ISO-8859-1; tecken som inte finns där
+   (emoji och liknande) blir frågetecken, typografiska citattecken och
+   tankstreck blir vanliga.
+
+   Ett avsnitt utan ljudfil visas i kursiv stil och kan inte hämtas.
+
+@ENDNODE
+
+@NODE Avsnitt "Avsnittslistan"
+@TOC Main
+@PREV Uppdatera
+@NEXT Hamta
+@TITLE "CurrentPod - Avsnittslistan"
+
+   @{b}Statuskolumnen@{ub}
+
+   Första kolumnen visar avsnittets tillstånd i klartext:
+
+      ny            Nytt sedan senaste uppdateringen, inte hämtat
+      (tomt)        Ohört, inte hämtat
+      i kö          Väntar i hämtkön
+      hämtar 34%    Hämtas just nu
+      hämtad        Hämtat (MP3). Ett påbörjat avsnitt står också som
+                    hämtad; positionen syns när du spelar det
+      konv. 37%     Konverteras till 8SVX just nu
+      8SVX          Hämtat och konverterat: spelas utan avkodning
+      hörd          Hört (helt, eller markerat som hört)
+      hörd, raderad Hört och filen raderad
+      spelar / paus Spelas just nu (fet stil)
+      ingen fil     Flödet har ingen ljudfil för avsnittet
+      fel           Hämtningen misslyckades (felet i statusraden)
+
+   Är kolumnen för smal för procenttalet, dra fönstret bredare eller
+   läs statusraden, som visar samma sak med mängd och tid.
+
+   @{b}Datum@{ub}
+
+   pubDate ur flödet. Flöden som saknar datum får dagens datum.
+
+   @{b}Titel@{ub}
+
+   itunes:title om den finns, annars title. Avsnittsnummer visas som
+   "553." före titeln, säsong och avsnitt som "S2E14". Trailers får
+   "[Trailer]" och bonusavsnitt "[Bonus]".
+
+   @{b}Längd@{ub}
+
+   itunes:duration. Saknas den visas filstorleken i stället.
+
+   @{b}Avsnittsinformation@{ub}
+
+   Amiga-E eller @{b}Avsnitt -> Information...@{ub} öppnar ett fönster med
+   hela beskrivningen, adressen till ljudfilen och var den ligger på
+   disk.
+
+   @{b}Markera som hörd@{ub}
+
+   Ett avsnitt räknas som hört när det spelats till slutet. Amiga-M
+   växlar för hand.
+
+@ENDNODE
+
+@NODE Hamta "Hämta avsnitt"
+@TOC Main
+@PREV Avsnitt
+@NEXT Uppspelning
+@TITLE "CurrentPod - Hämta avsnitt"
+
+   @{b}Hämta först, spela sedan@{ub}
+
+   Ett avsnitt måste hämtas helt innan det kan spelas. CurrentPod
+   strömmar inte: med 30 kB/s över HTTPS skulle det ändå bara räcka
+   till lägsta kvalitet, och en paus i nätet skulle bli en paus i
+   ljudet. Därför är knappen Spela släckt tills filen ligger på disk.
+
+   @{b}Hämtkön@{ub}
+
+   Knappen @{b}Hämta@{ub} (eller Amiga-D) lägger markerat avsnitt i kön. Kön
+   körs en fil i taget, och den delar nätprocessen med flödes-
+   uppdateringar och sökningar, så en sökning får vänta tills den
+   pågående hämtningen är klar (eller avbryts med @{b}Avsnitt -> Avbryt
+   hämtning@{ub}).
+
+   Hämtningen sker i en egen process med lägre prioritet (-1) än
+   gränssnittet. Spelaren har prioritet +1 så länge den hinner med,
+   så ljudet går före hämtningen.
+
+   @{b}Hastighet@{ub}
+
+   HTTPS-filer hämtas i 30-35 kB/s på en 030 med 50 MHz; AmiSSL:s
+   dekryptering är flaskhalsen, inte linjen eller disken (ren HTTP
+   går i över 200 kB/s). CurrentPod förhandlar därför ChaCha20, som
+   är nästan tre gånger snabbare än AES på en 68030, och faller
+   tillbaka till AES om servern inte kan. Ett avsnitt på 120 MB tar
+   ändå en timme. Statuskolumnen visar procent och statusraden mängd.
+
+   @{b}Återupptagning@{ub}
+
+   Bryts anslutningen mitt i (CloudFront gör det efter 10-20 minuter)
+   fortsätter CurrentPod av sig själv där den var med en Range-
+   begäran, upp till 60 gånger så länge det går framåt. Tre försök i
+   rad utan en enda ny byte ger upp med felet i statusraden; Hämta
+   igen fortsätter då från samma ställe. Delvis hämtade filer har
+   ändelsen .part i stället för .mp3.
+
+   @{b}Var hamnar filerna?@{ub}
+
+   I lådan som DOWNLOADDIR anger (förval PROGDIR:Avsnitt), en
+   underlåda per podd:
+
+      Work:Internet/CurrentPod/Avsnitt/The Retro Hour (Retro/
+         2026-10-16 553. Gremli.mp3
+
+   Filnamnet byggs av datum och titel och kortas så att det ryms i
+   FFS:s 30 tecken. Tecken som / : # ? byts mot understreck.
+
+   @{b}Radera@{ub}
+
+   @{b}Avsnitt -> Radera hämtad fil@{ub} (Del) raderar MP3-filen och en eventuell
+   8SVX-fil men behåller avsnittet i listan. Lyssningspositionen
+   nollställs. @{b}Radera MP3, behåll 8SVX@{ub} tar bara MP3:an, för den som
+   konverterat och vill ha disken tillbaka.
+
+@ENDNODE
+
+@NODE Uppspelning "Uppspelning"
+@TOC Main
+@PREV Hamta
+@NEXT Konvertera
+@TITLE "CurrentPod - Uppspelning"
+
+   @{b}Hur det fungerar@{ub}
+
+   Uppspelningen sker i en egen process som avkodar MP3-strömmen med
+   mpega.library, buffert för buffert, och matar ljudet till Paula
+   genom audio.device med tre köade buffertar om 16384 samplingar per
+   kanal. Huvudprogrammet pratar med spelarprocessen med meddelanden,
+   så att gränssnittet inte låser sig när avkodaren har fullt upp.
+
+   ID3v2-taggar i början av filen (ofta hundratals kilobyte omslags-
+   bild) hoppas över innan avkodaren får se strömmen.
+
+   @{b}14 bitar@{ub}
+
+   Paula har 8 bitar per kanal, men med två kanaler per sida, en på
+   volym 64 och en på volym 1, blir det 14 bitar. CurrentPod gör så
+   som förval. Volymen regleras då digitalt i avkodaren (MPEGA_scale)
+   så att Paula alltid kör på full volym. Med "14-bitars ljud"
+   avslaget används två kanaler i 8 bitar, vilket låter sämre men
+   lämnar två kanaler fria.
+
+   @{b}Kvalitetsnivåer@{ub}
+
+   Under Inställningar -> Kvalitet finns fem val:
+
+      Automatisk  Startar på nivån för din processor, mäter första
+                  bufferten och sänker tills avkodaren hinner med.
+                  Hinner den inte ens på Låg sänks spelarens prioritet
+                  så att gränssnitt och nät fortsätter fungera.
+      Låg         Mono, 11-12 kHz, mpega-kvalitet 0.
+      Mellan      Mono, 22-24 kHz, kvalitet 0.
+      Hög         Stereo, 22-24 kHz, kvalitet 1.
+      Full        Stereo, 44-48 kHz, kvalitet 2.
+
+   Nivån gäller från nästa avsnitt som startas. Utmatningsfrekvensen
+   är strömmens frekvens delad med 1, 2 eller 4, så en 48 kHz-podd ger
+   24 kHz på Mellan och en 44,1 kHz-podd ger 22 kHz.
+
+   @{b}Position@{ub}
+
+   Positionen sparas i databasen var 15:e sekund och när du byter
+   avsnitt eller avslutar. Startar du ett delvis hört avsnitt
+   fortsätter det tre sekunder före där du slutade. Hopp i filen görs
+   med mpega.library:s tidsbaserade sökning, som är ungefärlig i
+   filer med varierande bitrate.
+
+   @{b}Hopp@{ub}
+
+   Pil höger hoppar 30 sekunder framåt, pil vänster 15 sekunder
+   bakåt. Tiderna kan ändras i prefs-filen (SkipForward, SkipBack).
+
+   @{b}Fortsätt med nästa@{ub}
+
+   När ett avsnitt tar slut markeras det som hört, och nästa hämtade
+   avsnitt i listan spelas om "Spela nästa automatiskt" är på.
+
+   @{b}Konverterade avsnitt@{ub}
+
+   Finns en 8SVX-fil för avsnittet spelar Spela den i stället för
+   MP3:an: samma process och knappar, men ingen avkodning alls, så det
+   går på vilken Amiga som helst. Kvalitetsnivån gäller då inte, och
+   raden under mätaren visar "8SVX 12000 Hz mono, 8 bit". Volymen
+   regleras i Paula. Se @{"Konvertera" link Konvertera}.
+
+@ENDNODE
+
+@NODE Konvertera "Konvertera till 8SVX"
+@TOC Main
+@PREV Uppspelning
+@NEXT Prestanda
+@TITLE "CurrentPod - Konvertera till 8SVX"
+
+   @{b}Varför@{ub}
+
+   En 68030 orkar nätt och jämnt avkoda MP3 i realtid i mono, och en
+   oaccelererad A1200 orkar det inte alls. Men varje Amiga kan spela
+   8-bitars samplingar från disk utan att anstränga sig. Konvertering
+   gör avkodningen en gång, i bakgrunden, och sparar resultatet som
+   en vanlig IFF 8SVX-fil bredvid MP3:an. Sedan är uppspelningen
+   bara disk till Paula.
+
+   @{b}Hur@{ub}
+
+   Markera ett hämtat avsnitt och klicka @{b}Konvertera@{ub} (eller Amiga-K).
+   Statuskolumnen visar "konv. 37%" och statusraden procent och
+   konverterad speltid. Det går att fortsätta använda programmet
+   under tiden, och även att spela MP3:an direkt. Konverteringen görs
+   i en egen process med prioritet -2, lägst av alla, så den tar bara
+   den tid som blir över från gränssnitt, nät och spelare.
+
+   När den är klar står det "8SVX" i statuskolumnen, Konvertera
+   släcks, och Spela använder 8SVX-filen. @{b}Avsnitt -> Avbryt
+   konvertering@{ub} avbryter; den halvfärdiga .tmp-filen raderas.
+
+   @{b}Hur länge@{ub}
+
+   Avkodaren jobbar i samma takt som vid uppspelning: på en 030 med
+   50 MHz tar 12 kHz ungefär lika lång tid som avsnittet är långt,
+   24 kHz ungefär en och en halv gång. En 1260 gör det på en tredjedel.
+   Konvertera på kvällen, lyssna på morgonen.
+
+   @{b}Format och storlek@{ub}
+
+   Under @{b}Inställningar -> Konvertering@{ub} väljs utmatningen:
+
+      12 kHz, mindre fil    12 kB per sekund: 85 MB för två timmar.
+                            Telefonkvalitet plus; gott nog för tal.
+      24 kHz, bättre ljud   24 kB per sekund: 170 MB för två timmar.
+                            Som en bra Amiga-sampling.
+
+   Frekvensen är strömmens delad med 4 respektive 2, så en 44,1 kHz-
+   podd ger 11 respektive 22 kHz. Alltid mono, 8 bitar, okomprimerat.
+   Filen heter som MP3:an med ändelsen .8svx och kan spelas av vilket
+   samplingsprogram som helst: HippoPlayer, DeliTracker, MultiView.
+   Fältet Pcm i flödesfilen pekar på den.
+
+   @{b}Disk@{ub}
+
+   MP3:an ligger kvar efter konverteringen. @{b}Avsnitt -> Radera MP3,
+   behåll 8SVX@{ub} tar bort den när du är nöjd; @{b}Radera hämtad fil@{ub} tar
+   båda. Ett avsnitt vars MP3 raderats visar fortfarande "8SVX" och
+   kan spelas men inte konverteras om.
+
+@ENDNODE
+
+@NODE Prestanda "Prestanda"
+@TOC Main
+@PREV Konvertera
+@NEXT Installningar
+@TITLE "CurrentPod - Prestanda"
+
+   Siffrorna nedan är uppmätta i spelarens felsökningslogg med The
+   Retro Hour (128 kbit/s, 48 kHz, joint stereo) och mpega.library i
+   020+FPU-utförande. "Procent av realtid" är avkodningstid delad med
+   buffertens speltid; under 100 går det, över hackar det.
+
+   @{b}Emulatorn med processorbroms (som 1997)@{ub}
+
+      Konfig              Mellan (24 kHz mono)  Låg (12 kHz)  Hög (stereo)
+      A1200 + 030/50        160 %                  78 %          -
+      A1200 + 1260           80 %                  -            125 %
+
+   @{b}Emulatorn utan broms@{ub}
+
+      A1200 + 030            50 %                  -             -
+
+   Slutsatsen: med bromsen, som efterliknar en riktig 68030 på 50 MHz,
+   spelar 1260-konfigen poddar i mono utan problem, och 030-konfigen
+   klarar lägsta nivån (12 kHz mono). Bromsen är en ren nedsaktning av
+   processorn (uae_cpu_throttle) och tar inte hänsyn till att FPU-kod
+   gick förhållandevis snabbare på ett riktigt 68882. En riktig Blizzard
+   1230 IV spelar erfarenhetsmässigt 22 kHz mono, och en 1260 full
+   stereo. Hackar det: konvertera till 8SVX, se @{"Konvertera" link Konvertera}.
+
+   @{b}Vad kan man göra?@{ub}
+
+      - Kör poddarna på 1260-konfigen (./run.sh dream).
+      - Lätta på bromsen i a1200-1997.fs-uae (uae_cpu_throttle, ett
+        mindre negativt tal), eller ta bort den helt: då klarar även
+        030-konfigen Mellan med god marginal.
+      - Välj poddar med lägre bitrate: avkodningstiden beror delvis på
+        antalet bitar per ram.
+      - Hämta avsnitt när inget spelas. Nätprocessen tar också
+        processortid, och den halverar avkodningshastigheten på 030:n.
+      - Konvertera avsnitten till 8SVX (knappen Konvertera): då spelar
+        även en oaccelererad A1200 dem. Se @{"Konvertera" link Konvertera}.
+
+   Själva programmet lägger nästan ingen tid utanför mpega.library:
+   konverteringen till 14 bitar och chipminnesskrivningarna är under
+   två procent av bufferttiden.
+
+@ENDNODE
+
+@NODE Installningar "Inställningar"
+@TOC Main
+@PREV Prestanda
+@NEXT Tooltypes
+@TITLE "CurrentPod - Inställningar"
+
+   Inställningarna görs i menyn @{b}Inställningar@{ub} (kvalitet, konvertering,
+   14 bitar, spela nästa automatiskt), i sökfönstret (land) och med volym-
+   reglaget. De sparas i PROGDIR:CurrentPod.prefs vid @{b}Projekt -> Spara
+   inställningar@{ub} och när programmet avslutas. Resten av inställningarna
+   sätts som @{"tooltypes" link Tooltypes} eller direkt i prefs-filen, som är
+   ren text:
+
+      DownloadDir=Work:Internet/CurrentPod/Avsnitt
+      Quality=0            0 auto, 1 låg, 2 mellan, 3 hög, 4 full
+      ConvertQuality=1     1: 12 kHz, 2: 24 kHz (8SVX)
+      Bits14=1
+      Country=se
+      MaxEpisodes=50
+      Verify=0             1: kontrollera TLS-certifikat (se Felsökning)
+      AutoUpdate=0         (ännu inte i bruk)
+      SkipForward=30
+      SkipBack=15
+      Volume=64
+      AutoNext=1
+      Browser=Work:Internet/IBrowse/IBrowse "%s"
+
+   Tooltypes i ikonen går före prefs-filen.
+
+   Typsnitt, färger, ramar och fönsterplaceringar ställs i MUI-
+   inställningarna, som för alla MUI-program. Fönster-ID:n är CPD1
+   (huvudfönstret), CPD2 (sök), CPD3 (adress) och CPD4 (information).
+
+@ENDNODE
+
+@NODE Tooltypes "Tooltypes"
+@TOC Main
+@PREV Installningar
+@NEXT Kortkommandon
+@TITLE "CurrentPod - Tooltypes"
+
+   Följande tooltypes kan sättas i ikonen (Workbench -> Information)
+   eller ges som argument i Shell på formen NAMN=värde.
+
+      DOWNLOADDIR=sökväg   Låda för avsnitt (förval PROGDIR:Avsnitt)
+      QUALITY=AUTO|LOW|MEDIUM|HIGH|FULL
+      CONVERT=LOW|MEDIUM   8SVX i 12 eller 24 kHz
+      BITS=14|8
+      COUNTRY=xx           Landskod för katalogen (se, no, dk, fi,
+                           de, gb, us, fr, nl, pl)
+      MAXEPISODES=n        Avsnitt per podd i listan
+      VERIFY=0|1           Kontrollera TLS-certifikat
+      BROWSER=kommando     Med %s för adressen
+      URL=adress           Prenumerera på adressen vid start
+      DEBUG                Logga till PROGDIR:debug.log
+
+   Shell-exempel:
+
+      Stack 65536
+      Run >NIL: Work:Internet/CurrentPod/CurrentPod QUALITY=LOW DEBUG
+
+   Programmet byter själv till en stack på 64 KB om den det fick är
+   mindre, så Stack-raden är inte nödvändig men skadar inte.
+
+   I Shell finns dessutom PLAYFILE=fil, som spelar en MP3-fil direkt
+   utan podd. Det är avsett för test av spelaren.
+
+@ENDNODE
+
+@NODE Kortkommandon "Kortkommandon"
+@TOC Main
+@PREV Tooltypes
+@NEXT Filer
+@TITLE "CurrentPod - Kortkommandon"
+
+   @{b}Huvudfönstret@{ub}
+
+      Mellanslag       Spela / paus (spelar markerat om inget spelas)
+      Retur            Spela markerat avsnitt (om det är hämtat)
+      Pil höger        30 s framåt
+      Pil vänster      15 s bakåt
+      Pil upp/ner      Flytta i den aktiva listan
+      Tab              Växla mellan podd- och avsnittslistan
+      Del              Radera hämtad fil
+      Amiga-F          Sök i Apple Podcasts
+      Amiga-S          Prenumerera på adress
+      Amiga-U          Uppdatera podd       Amiga-A: alla
+      Amiga-D          Hämta avsnitt
+      Amiga-K          Konvertera till 8SVX
+      Amiga-M          Hörd / ohörd
+      Amiga-P          Spela
+      Amiga-I          Poddinformation      Amiga-E: avsnitt
+      Amiga-?          Om CurrentPod
+      Amiga-Q          Avsluta
+
+   På Linux-tangentbordet i emulatorn är vänster Windows-tangent
+   höger Amiga.
+
+   MUI:s egna tangenter (Esc stänger fönster, Amiga-Alt-tangent för
+   fönsterstorlek osv) gäller som vanligt.
+
+@ENDNODE
+
+@NODE Filer "Filer och format"
+@TOC Main
+@PREV Kortkommandon
+@NEXT Felsokning
+@TITLE "CurrentPod - Filer och format"
+
+   I programlådan finns:
+
+      CurrentPod              Programmet (68020+, kompilerat med gcc)
+      CurrentPod.guide        Denna manual
+      CurrentPod.prefs        Inställningar, ren text (skapas vid spar)
+      Feeds/                  Databasen
+         feeds.idx            En rad per podd: nummer och namn
+         0001.feed ...        Poddens metadata och avsnittslista
+      Avsnitt/                Hämtade avsnitt, en låda per podd:
+         *.mp3                   hämtade avsnitt
+         *.part                  påbörjade hämtningar
+         *.8svx                  konverterade avsnitt (IFF 8SVX)
+         *.tmp                   pågående konvertering
+      debug.log               Bara med DEBUG
+
+   @{b}Flödesfilerna@{ub}
+
+   Varje .feed-fil är ren text i ISO-8859-1 med en rad per fält, så
+   den kan läsas och redigeras med en vanlig editor om något blivit
+   konstigt. Början på en fil:
+
+      CURRENTPOD-FEED 1
+      Name=The Retro Hour (Retro Gaming Podcast)
+      Url=https://audioboom.com/channels/4970769.rss
+      Site=http://theretrohour.com
+      Author=The Retro Hour (Retro Gaming Podcast)
+      Lang=en
+      Image=https://audioboom.com/i/37945576.png
+      Apple=1073270208
+      ETag=W/"204980f4abfa7bc870478f83bd3a4e35"
+      Modified=Fri, 16 Oct 2026 12:05:33 GMT
+      Updated=18-Oct-26 13:35:53
+      AutoDownload=0
+      Serial=0
+      Desc=Your weekly dose of retro gaming and technology news...
+      .
+      [E]
+      Guid=audioboom-01a14494-22a1-741d-9c5c-9c046eef2bdf
+      Title=Gremlin Graphics Is Back: What Happens Next? - EP553
+      Date=2026-10-16 11:58:41
+      Enc=https://pscrb.fm/rss/p/dts.podtrac.com/redirect.mp3/...
+      Size=0
+      Type=audio/mpeg
+      Link=https://audioboom.com/posts/8965651
+      Image=https://audioboom.com/i/42371889.png
+      Dur=7456
+      Season=0
+      Episode=553
+      EType=0
+      Explicit=0
+      State=2
+      Pos=0
+      New=1
+      File=Work:Internet/CurrentPod/Avsnitt/The Retro Hour (Retro/...
+      Pcm=Work:Internet/CurrentPod/Avsnitt/The Retro Hour (Retro/...
+      Desc=Gremlin Graphics is making a comeback...\n\nContents:...
+      .
+
+   State: 0 ohört, 1 i kö, 2 hämtat, 3 hört, 4 fel, 5 delvis hört,
+   6 konverteras (blir 2 vid nästa start). Pos i sekunder. File är
+   MP3-filen och Pcm 8SVX-filen; saknas filen på disk vid start tas
+   fältet bort. Radbrytningar i Desc skrivs som "\n".
+
+   Programmet skriver databasen vid varje ändring, först till en
+   tillfällig fil som sedan byter namn, så ett strömavbrott förstör
+   inte flödet. Säkerhetskopiera lådan Feeds om du vill behålla
+   lyssningshistoriken.
+
+@ENDNODE
+
+@NODE Felsokning "Felsökning"
+@TOC Main
+@PREV Filer
+@NEXT KandaProblem
+@TITLE "CurrentPod - Felsökning"
+
+   Starta med tooltypen DEBUG så skriver programmet en utförlig logg
+   till PROGDIR:debug.log: varje steg i en hämtning, avkodarens
+   inställningar och hur lång tid varje buffert tog.
+
+   @{b}"Kunde inte öppna bsdsocket.library: är TCP/IP-stacken igång?"@{ub}
+
+   I emulatorn: bsdsocket_library = 1 saknas i konfigurationen. På
+   riktig hårdvara: starta Miami/AmiTCP/Roadshow.
+
+   @{b}"AmiSSL saknas (amisslmaster.library)"@{ub}
+
+   LIBS:amisslmaster.library saknas eller är för gammal, eller
+   LIBS:AmiSSL/ saknar amissl_v5xx.library för din processor.
+
+   @{b}"DNS-uppslagning misslyckades"@{ub}
+
+   Stacken kan inte slå upp namn. Kan IBrowse visa sidan är felet
+   tillfälligt.
+
+   @{b}"Certifikatet kunde inte verifieras"@{ub}
+
+   Bara med VERIFY=1. AmiSSL:s rotcertifikat är för gamla för servern,
+   eller klockan går fel. Förvalet är att inte kontrollera.
+
+   @{b}"TLS-handskakningen misslyckades"@{ub}
+
+   Servern kräver något AmiSSL inte kan. CurrentPod begränsar sig
+   till TLS 1.2, eftersom TLS 1.3 hänger efter handskakningen i
+   AmiSSL under FS-UAE:s bsdsocket-emulering. Nästan alla servrar
+   tillåter 1.2 ännu.
+
+   @{b}"Servern svarade 403"@{ub}
+
+   Apple avvisar ibland för många sökningar på kort tid. Vänta en
+   stund.
+
+   @{b}"Flödet gick inte att tolka (inte RSS?)"@{ub}
+
+   Oftast ett flöde som inte är RSS alls (en HTML-sida, en felsida).
+   Öppna adressen i IBrowse och se vad som kommer.
+
+   @{b}"Tidsgräns: servern svarar inte"@{ub}
+
+   Inga byte på 60 sekunder. Försök igen.
+
+   @{b}"Ljudkanalerna är upptagna (annat program spelar?)"@{ub}
+
+   Något annat håller Paula: HippoPlayer, ProTracker, DeliTracker.
+   Stoppa det och spela igen. CurrentPod släpper kanalerna när det
+   stoppar.
+
+   @{b}"mpega.library saknas i LIBS:"@{ub}
+
+   Lägg rätt variant ur Aminet util/libs/mpega_library.lha i LIBS:
+   under namnet mpega.library. Observera att ett Amiga-bibliotek måste
+   heta det som står inuti filen, så varianterna kan inte ligga under
+   sina egna namn.
+
+   @{b}HINNER INTE MED i spelarpanelen@{ub}
+
+   Avkodaren ligger efter. Välj en lägre kvalitet, stäng program som
+   drar processortid (en modulspelare med scope, en webbläsare som
+   laddar), vänta med hämtningar. Se @{"Prestanda" link Prestanda}.
+
+   @{b}"Avsnittet är inte MP3 och kan inte spelas"@{ub}
+
+   Flödet levererar AAC/M4A eller video. Det går att hämta men inte
+   spela på Amigan.
+
+@ENDNODE
+
+@NODE KandaProblem "Kända problem"
+@TOC Main
+@PREV Felsokning
+@NEXT AppleDetaljer
+@TITLE "CurrentPod - Kända problem"
+
+      - Avsnitt i AAC/M4A (audio/x-m4a, audio/mp4) kan hämtas men
+        inte spelas. Det finns ingen användbar AAC-avkodare för 68k.
+
+      - På 030-konfigen kan en sökning i katalogen medan en MP3
+        spelas sluta med "TLS-handskakningen misslyckades": avkodaren
+        lämnar för lite tid åt handskakningen. Pausa, sök och spela
+        igen.
+
+      - En hämtning halverar avkodningshastigheten på 030:n, trots
+        lägre prioritet. Hämta när inget spelas, eller lev med det.
+
+      - Positionsmätaren uppdateras per buffert (0,7-1,4 sekunder).
+
+      - Hopp bakåt och framåt tömmer buffertarna, så det blir en
+        kort tystnad innan ljudet kommer igen.
+
+      - Flöden med fler än 300 avsnitt visar bara de 300 senaste;
+        listan visar som förval 50.
+
+      - Ett avsnitt större än 2 GB kan inte sparas under FFS.
+
+      - Sökning med tecken utanför ISO-8859-1 blir fel.
+
+      - Vid uppspelning i 14 bitar är alla fyra Paula-kanalerna
+        upptagna; HippoPlayer kan inte spela samtidigt.
+
+@ENDNODE
+
+@NODE AppleDetaljer "Apple Podcasts-detaljer"
+@TOC Main
+@PREV KandaProblem
+@NEXT Planerat
+@TITLE "CurrentPod - Apple Podcasts-detaljer"
+
+   För den som vill veta exakt vad som skickas och tas emot.
+
+   @{b}Katalogsökning@{ub}
+
+   En sökning är en GET-begäran:
+
+      https://itunes.apple.com/search?media=podcast&entity=podcast
+         &limit=50&country=se&term=retro+hour
+
+   Svaret är JSON. CurrentPod tolkar det med en egen liten tolk och
+   läser fälten collectionName, artistName, feedUrl, artworkUrl100,
+   trackCount, releaseDate, primaryGenreName, collectionExplicitness
+   och collectionId.
+
+   @{b}Uppslagning av en Apple-länk@{ub}
+
+   ID:t ur länken skickas till
+
+      https://itunes.apple.com/lookup?id=1073270208&entity=podcast
+
+   vilket ger samma fält som ovan, i synnerhet feedUrl. Apple-ID:t
+   sparas i .feed-filen (fältet Apple).
+
+   @{b}itunes:-namnrymden@{ub}
+
+   Taggar som tolkas, i prioritetsordning mot RSS-grundfälten:
+
+      Podd:    itunes:image (href) > image/url
+               itunes:author > managingEditor
+               itunes:summary / description (den längsta vinner)
+               itunes:type (episodic/serial: serial visas äldst först)
+      Avsnitt: itunes:title > title
+               itunes:duration (HH:MM:SS, MM:SS eller sekunder)
+               itunes:episode, itunes:season
+               itunes:episodeType (full/trailer/bonus)
+               itunes:explicit
+               itunes:image (avsnittsomslag, sparas som adress)
+               content:encoded / description / itunes:summary
+               (den längsta vinner)
+
+   @{b}User-Agent@{ub}
+
+   CurrentPod/1.0 (AmigaOS 3.1; 68k) - så att det syns i server-
+   loggarna att det finns Amigor därute.
+
+@ENDNODE
+
+@NODE Planerat "Planerat"
+@TOC Main
+@PREV AppleDetaljer
+@NEXT Teknik
+@TITLE "CurrentPod - Planerat"
+
+   Det här fanns på ritbordet men hann inte med i 1.0:
+
+      - ARexx-port (PLAY, PAUSE, NEXT, GETATTR POSITION...)
+      - OPML-import och -export
+      - Dra och släpp av adresser på fönstret
+      - Automatisk uppdatering med intervall (fältet AutoUpdate)
+      - Automatisk hämtning av nya avsnitt per podd (fältet
+        AutoDownload finns i databasen men ingen inställning)
+      - Omslag i listorna (guigfx.library finns på maskinen)
+      - Kapitel (podcast:chapters och ID3v2 CHAP)
+      - Topplistor och genrer i sökfönstret
+      - Fler sökindex: Podcast Index och fyyd.de
+      - Strömning utan att hämta, insomningstimer, hastighet
+      - Inställningsfönster i stället för prefs-filen
+      - Konverteringskö (i dag ett avsnitt i taget) och "konvertera
+        automatiskt efter hämtning" för maskiner utan MP3-kraft
+      - Radera MP3 automatiskt när 8SVX-filen är klar
+
+@ENDNODE
+
+@NODE Teknik "Teknik"
+@TOC Main
+@PREV Planerat
+@NEXT Licens
+@TITLE "CurrentPod - Teknik"
+
+   Skrivet i C, korskompilerat på Linux med bebbo/AmigaPorts gcc 6.5
+   (m68k-amigaos, libnix, -m68020 -m68881). Källkoden ligger i
+   src/currentpod på värddatorn:
+
+      main.c      start, tooltypes, inställningar, stackbyte
+      gui.c       MUI-fönstren och huvudloopen
+      worker.c    nätprocessen: ett jobb i taget (flöde, sökning,
+                  uppslagning, hämtning)
+      http.c      HTTP/HTTPS-klient över bsdsocket och AmiSSL
+      rss.c       RSS/Atom-tolk med itunes:-taggar
+      json.c      JSON-läsning för Apples svar
+      db.c        databasen i PROGDIR:Feeds
+      player.c    spelarprocessen: mpega.library -> audio.device,
+                  eller 8SVX från disk -> audio.device
+      convert.c   konverteringsprocessen: mpega.library -> 8SVX-fil
+      util.c      strängar, UTF-8, datum, filer
+
+   Fyra processer: huvudprogrammet (prioritet 0) äger GUI:t och
+   databasen; nätprocessen (-1) gör all I/O mot nätet och tolkar
+   flöden; spelarprocessen (+1) avkodar och matar Paula; konverteraren
+   (-2) gör 8SVX-filer av den tid som blir över. De pratar
+   med Exec-meddelanden, och spelarens status ligger i en delad
+   struktur som GUI:t läser en gång i sekunden via timer.device.
+
+   Lärdomar från bygget, för den som vill göra något liknande:
+   MUI-SDK:ns inline-MUI_NewObject tar adressen till ett varargs-
+   argument och kraschar med gcc (CurrentPod har en egen variant);
+   underprocesser saknar PROGDIR:; ett bibliotek måste öppnas med
+   det namn som står i filen; libnix läser %d som 16 bitar; och
+   TLS 1.3 hänger i AmiSSL under FS-UAE.
+
+@ENDNODE
+
+@NODE Licens "Licens och tack"
+@TOC Main
+@PREV Teknik
+@NEXT Index
+@TITLE "CurrentPod - Licens och tack"
+
+   CurrentPod är fritt att använda och sprida. Programmet levereras i
+   befintligt skick; författaren ansvarar inte för full hårddisk eller
+   för vad poddarna säger.
+
+   @{b}Tack till@{ub}
+
+      Stefan Stuntz                MUI
+      Stéphane Tavenard            mpega.library (1997-1999, och den
+                                   avkodar fortfarande)
+      Jens Maus och AmiSSL-laget   AmiSSL
+      Stefan "Bebbo" Franke        gcc för m68k-amigaos
+      Krzysztof Radzikowski och    för att de visade att poddar på
+      George Sokianos              Amiga går (AMIcast Player, MediaVault)
+      The Retro Hour               testpodd
+
+   @{b}Varumärken@{ub}
+
+   Apple, Apple Podcasts och iTunes är varumärken som tillhör Apple
+   Inc. CurrentPod är inte godkänt av, anslutet till eller på annat
+   sätt kopplat till Apple.
+
+@ENDNODE
+
+@NODE Index "Index"
+@TOC Main
+@PREV Licens
+@TITLE "CurrentPod - Index"
+
+   @{" 14 bitar               " link Uppspelning}
+   @{" 8SVX                   " link Konvertera}
+   @{" AAC/M4A                " link KandaProblem}
+   @{" AmiSSL                 " link Systemkrav}
+   @{" Apple-länkar           " link Prenumerera}
+   @{" Apple Podcasts, detaljer" link AppleDetaljer}
+   @{" Avsnittsinformation    " link Avsnitt}
+   @{" Avsnittslistan         " link Avsnitt}
+   @{" bsdsocket.library      " link Felsokning}
+   @{" Certifikat             " link Felsokning}
+   @{" ChaCha20               " link Hamta}
+   @{" DEBUG                  " link Felsokning}
+   @{" Explicit               " link Katalog}
+   @{" Felsökning             " link Felsokning}
+   @{" FFS, filnamn           " link Hamta}
+   @{" Filformat              " link Filer}
+   @{" Hopp framåt/bakåt      " link Uppspelning}
+   @{" Huvudfönstret          " link Huvudfonstret}
+   @{" Hämta-knappen          " link Huvudfonstret}
+   @{" Hämtkön                " link Hamta}
+   @{" Installation           " link Installation}
+   @{" Inställningar          " link Installningar}
+   @{" itunes:-taggar         " link AppleDetaljer}
+   @{" Katalogsökning         " link Katalog}
+   @{" Knappraden             " link Huvudfonstret}
+   @{" Konvertera             " link Konvertera}
+   @{" Kortkommandon          " link Kortkommandon}
+   @{" Kvalitetsnivåer        " link Uppspelning}
+   @{" Kända problem          " link KandaProblem}
+   @{" Land                   " link Katalog}
+   @{" Licens                 " link Licens}
+   @{" Menyer                 " link Huvudfonstret}
+   @{" mpega.library          " link Felsokning}
+   @{" Paula                  " link Uppspelning}
+   @{" Planerat               " link Planerat}
+   @{" Position               " link Uppspelning}
+   @{" Prenumerera            " link Prenumerera}
+   @{" Prestanda              " link Prestanda}
+   @{" Prioriteter            " link Teknik}
+   @{" Radera avsnitt         " link Hamta}
+   @{" Shell-argument         " link Tooltypes}
+   @{" Snabbstart             " link Snabbstart}
+   @{" Spela-knappen          " link Huvudfonstret}
+   @{" Statuskolumnen         " link Avsnitt}
+   @{" Systemkrav             " link Systemkrav}
+   @{" Teknik                 " link Teknik}
+   @{" TLS 1.2                " link Felsokning}
+   @{" Tooltypes              " link Tooltypes}
+   @{" Uppdatera flöden       " link Uppdatera}
+   @{" Uppspelning            " link Uppspelning}
+   @{" User-Agent             " link AppleDetaljer}
+   @{" Återupptagning         " link Hamta}
+
+@ENDNODE

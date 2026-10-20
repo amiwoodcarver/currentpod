@@ -1,0 +1,1311 @@
+@DATABASE CurrentPod.guide
+@$VER: CurrentPod.guide 1.0 (18.10.2026)
+@(C) 2026 amiwoodcarver
+@AUTHOR amiwoodcarver
+@INDEX Index
+@WIDTH 76
+
+@NODE Main "CurrentPod 1.0 - Contents"
+@NEXT Introduction
+@TITLE "CurrentPod 1.0 - Contents"
+
+   +--------------------------------------------------------------------+
+   |                                                                    |
+   |      @{b}C u r r e n t P o d   1 . 0@{ub}                                   |
+   |      Podcast client for Workbench 3.x, Apple Podcasts compatible   |
+   |                                                                    |
+   |      An Amiga 1200, a Blizzard and the podcasts of 2026.           |
+   |                                                                    |
+   +--------------------------------------------------------------------+
+
+   @{b}Getting started@{ub}
+
+      @{" Introduction          " link Introduction}  What CurrentPod is and isn't
+      @{" Requirements          " link Requirements}  What the machine needs
+      @{" Installation          " link Installation}  Where everything lives
+      @{" Quick start           " link QuickStart}  Your first podcast in five minutes
+
+   @{b}Using the program@{ub}
+
+      @{" The main window       " link MainWindow}  Lists, player panel and menus
+      @{" Subscribing           " link Subscribe}  Address, Apple link or search
+      @{" Searching the catalog " link Catalog}  The Apple Podcasts catalog
+      @{" Updating feeds        " link Update}  Fetching new episodes
+      @{" The episode list      " link Episodes}  The status column and episode info
+      @{" Downloading episodes  " link Download}  Download first, play later
+      @{" Playback              " link Playback}  MP3 on a 68030: how it works
+      @{" Converting            " link Convert}  8SVX for machines without MP3 muscle
+      @{" Performance           " link Performance}  Measured figures and what they mean
+
+   @{b}Customising@{ub}
+
+      @{" Settings              " link Settings}  The Settings menu and the prefs file
+      @{" Tooltypes             " link Tooltypes}  Icon tooltypes and Shell arguments
+      @{" Keyboard shortcuts    " link Keys}  The keyboard
+      @{" Files and formats     " link Files}  What's in the program drawer
+
+   @{b}When things go wrong@{ub}
+
+      @{" Troubleshooting       " link Troubleshooting}  Common error messages
+      @{" Known problems        " link KnownProblems}  What doesn't work (yet)
+      @{" Apple Podcasts details" link AppleDetails}  How the compatibility works
+
+   @{b}Miscellaneous@{ub}
+
+      @{" Planned               " link Planned}  What didn't make it into 1.0
+      @{" Technical             " link Technical}  How the program is built
+      @{" License and thanks    " link License}  Libraries used
+      @{" Index                 " link Index}  Alphabetical index
+
+@ENDNODE
+
+@NODE Introduction "Introduction"
+@TOC Main
+@PREV Main
+@NEXT Requirements
+@TITLE "CurrentPod - Introduction"
+
+   @{b}What is CurrentPod?@{ub}
+
+   CurrentPod is a podcast client (podcatcher) for AmigaOS 3.0 and
+   later with a MUI interface. It subscribes to podcast feeds (RSS 2.0
+   with Apple's itunes: extension, or Atom), downloads episodes over
+   HTTP and HTTPS and plays them right on the Amiga with mpega.library,
+   straight out through Paula in 14 bits.
+
+   The program is an ordinary MUI program with menus, tooltypes and a
+   couple of windows, written in C in 2026 but meant to feel at home on
+   a Workbench 3.1 from 1997. It uses the libraries that have arrived
+   since then where they are needed: AmiSSL for encrypted connections
+   and mpega.library (1998) for the decoding.
+
+   @{b}Compatible with Apple Podcasts@{ub}
+
+   "Compatible with Apple Podcasts" means three things:
+
+      1. You can @{"search" link Catalog} the Apple Podcasts catalog right in the
+         program, in the country of your choice, and subscribe to a hit
+         with one click. The catalog is queried through Apple's open
+         search interface (the iTunes Search API), which needs no
+         account.
+
+      2. You can @{"paste a link" link Subscribe} from Apple Podcasts
+         (podcasts.apple.com/...). CurrentPod looks up the podcast ID
+         and finds the real RSS feed by itself.
+
+      3. Feeds are parsed with the same rules Apple uses: itunes: tags
+         for artwork, duration, season, episode number, episode type
+         (full/trailer/bonus) and the explicit flag.
+
+   It does @{i}not@{ui} mean that CurrentPod signs in with an Apple ID, syncs
+   your listening position with Apple's servers or plays paid podcasts.
+
+   @{b}What is it not?@{ub}
+
+   CurrentPod is not a general MP3 player. It plays the episodes it
+   knows about, and remembers where you were. For loose MP3 files there
+   is HippoPlayer with the mpega plugin, or AmigaAMP.
+
+@ENDNODE
+
+@NODE Requirements "Requirements"
+@TOC Main
+@PREV Introduction
+@NEXT Installation
+@TITLE "CurrentPod - Requirements"
+
+   @{b}Minimum@{ub}
+
+      - AmigaOS 3.0 or later (Kickstart 39+)
+      - 68020 or better, 2 MB fast RAM, 1 MB free chip memory
+        (the audio buffers take 192 KB of chip)
+      - MUI 3.8 or later (on this machine MUI 3.9)
+      - A TCP/IP stack with bsdsocket.library (in the emulator: the
+        one built into FS-UAE; on real hardware AmiTCP, Miami, Genesis
+        or Roadshow)
+      - AmiSSL 4.x or 5.x (amisslmaster.library) for HTTPS, which Apple
+        and most podcast servers require
+      - mpega.library 2.0 or later in LIBS: (for playback)
+
+   @{b}Recommended@{ub}
+
+      - A 68030 at 50 MHz with FPU, preferably more. See @{"Performance" link Performance}.
+      - A hard disk with room: episodes are 20-80 MB each.
+
+   @{b}What can the machine handle?@{ub}
+
+   MP3 decoding (layer III) is the heavy part. CurrentPod has four
+   quality levels and automatically picks the highest one the decoder
+   can keep up with:
+
+      Low      mono, 11-12 kHz, mpega quality 0
+      Medium   mono, 22-24 kHz, quality 0
+      High     stereo, 22-24 kHz, quality 1
+      Full     stereo, 44-48 kHz, quality 2
+
+   For speech the difference between Medium and Full is small. What
+   the various machines can manage is listed under @{"Performance" link Performance}.
+
+   Fetching and parsing feeds works fine on any 020; it is only the
+   playback that wants horsepower.
+
+@ENDNODE
+
+@NODE Installation "Installation"
+@TOC Main
+@PREV Requirements
+@NEXT QuickStart
+@TITLE "CurrentPod - Installation"
+
+   On this machine CurrentPod is already installed in
+   @{b}Work:Internet/CurrentPod@{ub}, and mpega.library is in LIBS:. There is
+   no installation script: the program drawer is self-contained.
+
+   @{b}By hand on another Amiga@{ub}
+
+   Copy the CurrentPod drawer wherever you want it. Put mpega.library
+   (Aminet util/libs/mpega_library.lha; take the variant for your
+   processor, 020FPU for an 030 with FPU, 060FPU for an 060) in LIBS:
+   under the name mpega.library. Install AmiSSL from Aminet with its
+   own script.
+
+   The program finds everything through PROGDIR:, so no assign is
+   needed. On the first start PROGDIR:Feeds (the database) and
+   PROGDIR:Episodes (downloaded files) are created. If you want the
+   episodes on another partition, set the DOWNLOADDIR tooltype.
+
+   @{b}Uninstalling@{ub}
+
+   Delete the drawer. CurrentPod writes nothing anywhere else, except
+   ENV:MUI/CURRENTPOD.cfg if you have saved MUI settings for the
+   program.
+
+@ENDNODE
+
+@NODE QuickStart "Quick start"
+@TOC Main
+@PREV Installation
+@NEXT MainWindow
+@TITLE "CurrentPod - Quick start"
+
+   This is how you get your first podcast going. The network should be
+   up; IBrowse should be able to show a page, for example.
+
+      1. Double-click the CurrentPod icon in Work:Internet/CurrentPod.
+
+      2. Choose @{b}Podcast -> Search Apple Podcasts...@{ub} (or press Amiga-F).
+         Type a search term, for example "retro hour", pick a country
+         in the cycle gadget and press Return. After a while up to 50
+         hits are shown with name, publisher and number of episodes.
+         The search goes over HTTPS and takes 20-40 seconds on an 030.
+
+      3. Double-click a hit (or select it and click @{b}Subscribe@{ub}). The
+         podcast lands in the left list and the feed is fetched in the
+         background. The Retro Hour's feed is 1.7 MB and takes a couple
+         of minutes over HTTPS on an 030; the status line shows how it
+         is going.
+
+      4. Select an episode in the right list and click @{b}Download@{ub} below
+         the list (or press Amiga-D). The progress shows in the status
+         column and the status line. It takes its time: count on 30-35
+         kB/s over HTTPS, a good hour for a two-hour episode. Do
+         something else meanwhile; the download does not get in the
+         way.
+
+      5. When the episode is downloaded the status column says
+         "downloaded" and the @{b}Play@{ub} and @{b}Convert@{ub} buttons light up. Click
+         Play (or double-click the row). Space pauses, cursor right
+         skips 30 seconds forward, cursor left 15 back.
+
+      6. If the sound stutters, the machine cannot decode MP3 in real
+         time. Click @{b}Convert@{ub}: the episode is turned into an 8SVX file in
+         the background, and Play then uses that instead. See
+         @{"Converting" link Convert}.
+
+   The next time you start the program it remembers where you were in
+   the episode and starts there (minus three seconds) if you play it
+   again.
+
+   @{b}Tip@{ub}: if you have the address of a feed you can skip the search and
+   use @{b}Podcast -> Subscribe to address...@{ub} (Amiga-S).
+
+@ENDNODE
+
+@NODE MainWindow "The main window"
+@TOC Main
+@PREV QuickStart
+@NEXT Subscribe
+@TITLE "CurrentPod - The main window"
+
+   The main window has three parts. The split between the left and
+   right lists can be dragged with MUI's balance bar, and the window's
+   size and position are saved with the MUI settings (snapshot in the
+   MUI menu).
+
+   +--------------------+------------------------------------------------+
+   | Podcast        New | Status     Date         Episode         Length |
+   |                    |                                                |
+   | The Retro Hou   50 | new        16 Oct 2026  553. Gremlin G..  2:04 |
+   | Kodsnack         3 | downloaded 10 Oct 2026  552. GamesMast..  1:48 |
+   |                    | 8SVX        2 Oct 2026  551. Streets o..  1:18 |
+   |                    |                                                |
+   |                    +------------------------------------------------+
+   |                    |   [ Download ]     [ Play ]      [ Convert ]   |
+   +--------------------+------------------------------------------------+
+   | [|<] [<<] [ > ] [||] [>>] [>|] 553. Gremlin...  12:31 / 2:04:16     |
+   | [===========|---------------------------------]  Vol [=======|-]    |
+   |         128 kbit/s -> 24000 Hz mono, 14 bit, quality medium         |
+   +---------------------------------------------------------------------+
+   | Fetching 14.2 MB / 31.8 MB: 552. GamesMaster...                     |
+   +---------------------------------------------------------------------+
+
+   @{b}The podcast list (left)@{ub}
+
+   One row per subscription, with the number of unheard episodes at
+   the right edge. Bold: the feed has new episodes since you last
+   looked. Italic: the feed is being updated right now. A "!" in the
+   right column means the latest update failed; the error shows in the
+   status line and in @{b}Podcast -> Information...@{ub}.
+
+   @{b}The episode list (right)@{ub}
+
+   The episodes of the selected podcast, newest first (oldest first
+   for podcasts that have marked themselves as "serial"). The columns
+   are status, date, title and length. See @{"The episode list" link Episodes} for
+   the status column.
+
+   @{b}The button row below the episode list@{ub}
+
+   The three buttons follow the state of the selected episode:
+
+      Download    Lit until the episode is downloaded. Puts it in the
+                  download queue.
+      Play        Lit when the episode is downloaded. Plays the 8SVX
+                  file if there is one, otherwise the MP3 file directly.
+      Convert     Lit when the episode is downloaded and not converted.
+                  Makes an 8SVX file in the background; goes dark when
+                  it is done or while another conversion is running.
+
+   Double-clicking a row means Play if the episode is downloaded,
+   otherwise Download. An episode that is not downloaded cannot be
+   played: the Play button in the player panel then says so in the
+   status line.
+
+   @{b}The player panel@{ub}
+
+      [|<]  Previous downloaded episode in the list (or start over, if
+            more than 10 seconds have been played)
+      [<<]  15 seconds back
+      [ > ] Play the selected episode (must be downloaded)
+      [||]  Pause / resume
+      [>>]  30 seconds forward
+      [>|]  Next downloaded episode
+
+   The gauge shows the position. The volume slider works digitally in
+   the decoder, so 14-bit mode keeps its full resolution. The line
+   below shows the stream's bitrate, what the decoder delivers, bit
+   depth and the chosen quality level. If it says CAN'T KEEP UP the
+   decoder is more than 1.5 seconds behind; see @{"Performance" link Performance}.
+
+   @{b}The status line@{ub}
+
+   Shows the download in progress with the amount transferred, or the
+   latest event.
+
+   @{b}Menus@{ub}
+
+   @{b}Project@{ub}
+      About CurrentPod...      A-?
+      Save settings                 Writes PROGDIR:CurrentPod.prefs
+      Quit                     A-Q  (also saves the settings)
+
+   @{b}Podcast@{ub}
+      Search Apple Podcasts... A-F
+      Subscribe to address...  A-S  RSS address or Apple link
+      Update                   A-U  The selected podcast
+      Update all               A-A
+      Information...           A-I  Description, addresses, last error
+      Remove subscription           Downloaded files stay on disk
+
+   @{b}Episode@{ub}
+      Play                     A-P
+      Pause / resume
+      Stop
+      Download                 A-D
+      Download all new              All unheard episodes in the podcast
+      Cancel download
+      Convert to 8SVX          A-K  See Converting
+      Cancel conversion
+      Delete MP3, keep 8SVX         Saves disk after converting
+      Mark as heard/unheard    A-M
+      Delete downloaded file        Both MP3 and 8SVX; the episode
+                                    stays in the list
+      Information...           A-E  The whole description
+      Open web page                 In IBrowse (the BROWSER tooltype)
+
+   @{b}Settings@{ub}
+      Quality                       Automatic / Low / Medium / High / Full
+      Conversion                    12 kHz, smaller file / 24 kHz
+      14-bit audio                  Off: 8 bits, two Paula channels
+      Play next automatically
+
+@ENDNODE
+
+@NODE Subscribe "Subscribing"
+@TOC Main
+@PREV MainWindow
+@NEXT Catalog
+@TITLE "CurrentPod - Subscribing"
+
+   There are two ways to add a podcast.
+
+   @{b}1. Search the Apple Podcasts catalog@{ub}
+
+   The easiest. See @{"Searching the catalog" link Catalog}.
+
+   @{b}2. Paste a link or an RSS address@{ub}
+
+   Choose @{b}Podcast -> Subscribe to address...@{ub} or press Amiga-S. The
+   field accepts any of the following:
+
+      https://podcasts.apple.com/se/podcast/kodsnack/id561631498
+      https://itunes.apple.com/se/podcast/id561631498
+      https://feeds.example.se/kodsnack.xml
+      feed://feeds.example.se/kodsnack.xml
+      podcast://feeds.example.se/kodsnack.xml
+      feeds.example.se/kodsnack.xml   (https:// is added)
+
+   Apple links contain a podcast ID (the digits after "id"). CurrentPod
+   looks the ID up at Apple and gets back the address of the real RSS
+   feed, which is then fetched.
+
+   The address can be pasted with Amiga-V if it was copied in IBrowse.
+
+   @{b}What happens next@{ub}
+
+   The podcast appears in the list as "(fetching...)" and the feed is
+   fetched in the background. When it is done the name is replaced by
+   the feed's title and the episodes are filled in, at most as many as
+   MAXEPISODES says (default 50). The podcast's name, publisher,
+   description, web page, artwork address and language are saved in
+   PROGDIR:Feeds.
+
+   Feeds larger than 3 MB (LINUX Unplugged with 689 episodes is 9 MB)
+   are read only up to 3 MB, which is enough for the 200 newest
+   episodes. The status line then says "large feed, newest 50".
+
+   If the fetch fails the podcast stays with a "!" and can be updated
+   again with Amiga-U once the problem is fixed, or removed.
+
+@ENDNODE
+
+@NODE Catalog "Searching the catalog"
+@TOC Main
+@PREV Subscribe
+@NEXT Update
+@TITLE "CurrentPod - Searching Apple Podcasts"
+
+   @{b}Podcast -> Search Apple Podcasts...@{ub} (Amiga-F) opens the search
+   window.
+
+   +-----------------------------------------------------------------+
+   | Search: [retro hour                       ]  Country: [Sweden ] |
+   +-----------------------------------------------------------------+
+   | Name                           Publisher               Episodes |
+   | The Retro Hour (Retro Gaming.. The Retro Hour              500  |
+   | Retro VGM Revival Hour         Retro VGM Revival Hour       95  |
+   | ...                                                             |
+   +-----------------------------------------------------------------+
+   | 3 hits                                                          |
+   | [Subscribe]                                           [Close]   |
+   +-----------------------------------------------------------------+
+
+   @{b}The search field@{ub}
+
+   The search is sent to Apple's search interface when you press
+   Return. Apple searches roughly like the Apple Podcasts app does: in
+   title, publisher and description. Swedish characters work
+   (CurrentPod translates from ISO-8859-1 to UTF-8 and URL-encodes).
+   At most 50 hits are shown.
+
+   @{b}Country@{ub}
+
+   The catalog is split per country, and a podcast that only exists in
+   the British catalog is not found if you search the Swedish one.
+   Change country in the cycle gadget; the choice is saved in the
+   settings.
+
+   @{b}The hit list@{ub}
+
+   Podcasts Apple has marked as "explicit" are shown with [E]. Double-
+   clicking a row subscribes, as does the @{b}Subscribe@{ub} button. The
+   window can stay open while you subscribe to several.
+
+@ENDNODE
+
+@NODE Update "Updating feeds"
+@TOC Main
+@PREV Catalog
+@NEXT Episodes
+@TITLE "CurrentPod - Updating feeds"
+
+   A feed is updated by fetching the RSS file again and comparing it
+   with the database. New episodes are added at the top and marked as
+   new; episodes already present keep their status and position.
+
+   Amiga-U updates the selected podcast, Amiga-A all of them. The
+   update runs in the background, one podcast at a time, and you can
+   keep listening.
+
+   @{b}Frugality@{ub}
+
+   CurrentPod sends If-Modified-Since and If-None-Match (ETag) if the
+   server supplied them. An unchanged feed then costs only a few
+   hundred bytes and the reply "no changes". At most the first 300
+   episodes of a feed are parsed.
+
+   @{b}Redirects@{ub}
+
+   Up to six redirects (301/302/303/307/308) are followed, also
+   between http and https.
+
+   @{b}What is parsed@{ub}
+
+   RSS 2.0 and Atom 1.0. From each episode these are taken:
+
+      title, pubDate, enclosure (address, size, type), guid, link,
+      description or content:encoded (HTML is stripped; p and br
+      become line breaks), itunes:title, itunes:duration,
+      itunes:episode, itunes:season, itunes:episodeType,
+      itunes:explicit, itunes:image, itunes:summary, media:content
+      (if there is no enclosure)
+
+   Feeds in UTF-8 are translated to ISO-8859-1; characters that do not
+   exist there (emoji and the like) become question marks, and
+   typographic quotes and dashes become plain ones.
+
+   An episode without an audio file is shown in italics and cannot be
+   downloaded.
+
+@ENDNODE
+
+@NODE Episodes "The episode list"
+@TOC Main
+@PREV Update
+@NEXT Download
+@TITLE "CurrentPod - The episode list"
+
+   @{b}The status column@{ub}
+
+   The first column shows the episode's state in plain words:
+
+      new             New since the last update, not downloaded
+      (empty)         Unheard, not downloaded
+      queued          Waiting in the download queue
+      fetching 34%    Being downloaded right now
+      downloaded      Downloaded (MP3). An episode you have started
+                      also shows as downloaded; the position shows
+                      when you play it
+      conv. 37%       Being converted to 8SVX right now
+      8SVX            Downloaded and converted: plays without decoding
+      heard           Heard (all the way, or marked as heard)
+      heard, deleted  Heard and the file deleted
+      playing/paused  Playing right now (bold)
+      no file         The feed has no audio file for the episode
+      error           The download failed (the error is in the status
+                      line)
+
+   If the column is too narrow for the percentage, drag the window
+   wider or read the status line, which shows the same thing with
+   amount and time.
+
+   @{b}Date@{ub}
+
+   pubDate from the feed. Feeds without dates get today's date.
+
+   @{b}Title@{ub}
+
+   itunes:title if present, otherwise title. The episode number is
+   shown as "553." before the title, season and episode as "S2E14".
+   Trailers get "[Trailer]" and bonus episodes "[Bonus]".
+
+   @{b}Length@{ub}
+
+   itunes:duration. If it is missing the file size is shown instead.
+
+   @{b}Episode information@{ub}
+
+   Amiga-E or @{b}Episode -> Information...@{ub} opens a window with the whole
+   description, the address of the audio file and where it is on disk.
+
+   @{b}Marking as heard@{ub}
+
+   An episode counts as heard when it has been played to the end.
+   Amiga-M toggles it by hand.
+
+@ENDNODE
+
+@NODE Download "Downloading episodes"
+@TOC Main
+@PREV Episodes
+@NEXT Playback
+@TITLE "CurrentPod - Downloading episodes"
+
+   @{b}Download first, play later@{ub}
+
+   An episode must be downloaded completely before it can be played.
+   CurrentPod does not stream: at 30 kB/s over HTTPS it would only be
+   enough for the lowest quality anyway, and a hiccup on the network
+   would become a hiccup in the sound. That is why the Play button
+   stays dark until the file is on disk.
+
+   @{b}The download queue@{ub}
+
+   The @{b}Download@{ub} button (or Amiga-D) puts the selected episode in the
+   queue. The queue runs one file at a time, and it shares the network
+   process with feed updates and searches, so a search has to wait
+   until the current download is done (or cancelled with @{b}Episode ->
+   Cancel download@{ub}).
+
+   The download runs in its own process with a lower priority (-1)
+   than the interface. The player has priority +1 as long as it keeps
+   up, so the sound comes before the download.
+
+   @{b}Speed@{ub}
+
+   HTTPS files are fetched at 30-35 kB/s on an 030 at 50 MHz; AmiSSL's
+   decryption is the bottleneck, not the line or the disk (plain HTTP
+   goes at over 200 kB/s). CurrentPod therefore negotiates ChaCha20,
+   which is almost three times faster than AES on a 68030, and falls
+   back to AES if the server cannot. A 120 MB episode still takes an
+   hour. The status column shows the percentage and the status line
+   the amount.
+
+   @{b}Resuming@{ub}
+
+   If the connection breaks midway (CloudFront does that after 10-20
+   minutes) CurrentPod carries on by itself from where it was with a
+   Range request, up to 60 times as long as it makes progress. Three
+   attempts in a row without a single new byte give up with the error
+   in the status line; Download again then continues from the same
+   spot. Partially downloaded files have the extension .part instead
+   of .mp3.
+
+   @{b}Where do the files go?@{ub}
+
+   In the drawer DOWNLOADDIR points to (default PROGDIR:Episodes), one
+   subdrawer per podcast:
+
+      Work:Internet/CurrentPod/Episodes/The Retro Hour (Retro/
+         2026-10-16 553. Gremli.mp3
+
+   The file name is built from date and title and shortened to fit in
+   FFS's 30 characters. The characters / : # ? are replaced by
+   underscores.
+
+   @{b}Deleting@{ub}
+
+   @{b}Episode -> Delete downloaded file@{ub} (Del) deletes the MP3 file and any
+   8SVX file but keeps the episode in the list. The listening position
+   is reset. @{b}Delete MP3, keep 8SVX@{ub} removes only the MP3, for those who
+   have converted and want their disk back.
+
+@ENDNODE
+
+@NODE Playback "Playback"
+@TOC Main
+@PREV Download
+@NEXT Convert
+@TITLE "CurrentPod - Playback"
+
+   @{b}How it works@{ub}
+
+   Playback runs in its own process, which decodes the MP3 stream with
+   mpega.library, buffer by buffer, and feeds the sound to Paula
+   through audio.device with three queued buffers of 16384 samples per
+   channel. The main program talks to the player process with
+   messages, so the interface does not lock up when the decoder has
+   its hands full.
+
+   ID3v2 tags at the start of the file (often hundreds of kilobytes of
+   cover art) are skipped before the decoder gets to see the stream.
+
+   @{b}14 bits@{ub}
+
+   Paula has 8 bits per channel, but with two channels per side, one
+   at volume 64 and one at volume 1, you get 14 bits. CurrentPod does
+   this by default. The volume is then controlled digitally in the
+   decoder (MPEGA_scale) so that Paula always runs at full volume.
+   With "14-bit audio" switched off two channels are used in 8 bits,
+   which sounds worse but leaves two channels free.
+
+   @{b}Quality levels@{ub}
+
+   Under Settings -> Quality there are five choices:
+
+      Automatic   Starts at the level for your processor, measures the
+                  first buffer and lowers until the decoder keeps up.
+                  If it cannot keep up even on Low, the player's
+                  priority is lowered so that the interface and the
+                  network keep working.
+      Low         Mono, 11-12 kHz, mpega quality 0.
+      Medium      Mono, 22-24 kHz, quality 0.
+      High        Stereo, 22-24 kHz, quality 1.
+      Full        Stereo, 44-48 kHz, quality 2.
+
+   The level applies from the next episode started. The output rate is
+   the stream's rate divided by 1, 2 or 4, so a 48 kHz podcast gives
+   24 kHz on Medium and a 44.1 kHz podcast gives 22 kHz.
+
+   @{b}Position@{ub}
+
+   The position is saved in the database every 15 seconds and when you
+   switch episode or quit. If you start a partly heard episode it
+   continues three seconds before where you stopped. Seeking in the
+   file uses mpega.library's time-based seek, which is approximate in
+   files with variable bitrate.
+
+   @{b}Skipping@{ub}
+
+   Cursor right skips 30 seconds forward, cursor left 15 seconds back.
+   The times can be changed in the prefs file (SkipForward, SkipBack).
+
+   @{b}Playing on to the next@{ub}
+
+   When an episode ends it is marked as heard, and the next downloaded
+   episode in the list is played if "Play next automatically" is on.
+
+   @{b}Converted episodes@{ub}
+
+   If there is an 8SVX file for the episode, Play plays it instead of
+   the MP3: same process and buttons, but no decoding at all, so it
+   works on any Amiga. The quality level does not apply then, and the
+   line below the gauge says "8SVX 12000 Hz mono, 8 bit, no decoding".
+   The volume is controlled in Paula. See @{"Converting" link Convert}.
+
+@ENDNODE
+
+@NODE Convert "Converting to 8SVX"
+@TOC Main
+@PREV Playback
+@NEXT Performance
+@TITLE "CurrentPod - Converting to 8SVX"
+
+   @{b}Why@{ub}
+
+   A 68030 can only just decode MP3 in real time in mono, and an
+   unaccelerated A1200 cannot do it at all. But every Amiga can play
+   8-bit samples from disk without breaking a sweat. Converting does
+   the decoding once, in the background, and saves the result as an
+   ordinary IFF 8SVX file next to the MP3. After that, playback is
+   just disk to Paula.
+
+   @{b}How@{ub}
+
+   Select a downloaded episode and click @{b}Convert@{ub} (or Amiga-K). The
+   status column shows "conv. 37%" and the status line the percentage
+   and the converted playing time. You can keep using the program
+   meanwhile, and even play the MP3 directly. The conversion runs in
+   its own process with priority -2, lowest of all, so it only takes
+   the time left over from interface, network and player.
+
+   When it is done the status column says "8SVX", Convert goes dark,
+   and Play uses the 8SVX file. @{b}Episode -> Cancel conversion@{ub} cancels;
+   the half-finished .tmp file is deleted.
+
+   @{b}How long@{ub}
+
+   The decoder works at the same pace as during playback: on an 030 at
+   50 MHz, 12 kHz takes about as long as the episode itself, 24 kHz
+   about one and a half times as long. A 1260 does it in a third of
+   that. Convert in the evening, listen in the morning.
+
+   @{b}Format and size@{ub}
+
+   Under @{b}Settings -> Conversion@{ub} you choose the output:
+
+      12 kHz, smaller file   12 kB per second: 85 MB for two hours.
+                             Telephone quality plus; good enough for
+                             speech.
+      24 kHz, better sound   24 kB per second: 170 MB for two hours.
+                             Like a good Amiga sample.
+
+   The rate is the stream's divided by 4 or 2 respectively, so a
+   44.1 kHz podcast gives 11 or 22 kHz. Always mono, 8 bits,
+   uncompressed. The file has the same name as the MP3 with the
+   extension .8svx and can be played by any sample player:
+   HippoPlayer, DeliTracker, MultiView. The Pcm field in the feed file
+   points to it.
+
+   @{b}Disk@{ub}
+
+   The MP3 stays after the conversion. @{b}Episode -> Delete MP3, keep
+   8SVX@{ub} removes it once you are happy; @{b}Delete downloaded file@{ub} takes
+   both. An episode whose MP3 has been deleted still shows "8SVX" and
+   can be played but not converted again.
+
+@ENDNODE
+
+@NODE Performance "Performance"
+@TOC Main
+@PREV Convert
+@NEXT Settings
+@TITLE "CurrentPod - Performance"
+
+   The figures below were measured in the player's debug log with The
+   Retro Hour (128 kbit/s, 48 kHz, joint stereo) and the 020+FPU build
+   of mpega.library. "Percent of real time" is decoding time divided
+   by the buffer's playing time; below 100 it works, above it
+   stutters.
+
+   @{b}The emulator with CPU throttle (like 1997)@{ub}
+
+      Config              Medium (24 kHz mono)  Low (12 kHz)  High (stereo)
+      A1200 + 030/50        160 %                  78 %          -
+      A1200 + 1260           80 %                  -            125 %
+
+   @{b}The emulator without throttle@{ub}
+
+      A1200 + 030            50 %                  -             -
+
+   The conclusion: with the throttle, which mimics a real 68030 at
+   50 MHz, the 1260 config plays podcasts in mono without trouble,
+   and the 030 config manages the lowest level (12 kHz mono). The
+   throttle is a plain slowdown of the processor (uae_cpu_throttle)
+   and does not account for FPU code having been comparatively faster
+   on a real 68882. A real Blizzard 1230 IV plays 22 kHz mono in
+   practice, and a 1260 full stereo. If it stutters: convert to 8SVX,
+   see @{"Converting" link Convert}.
+
+   @{b}What can you do?@{ub}
+
+      - Run the podcasts on the 1260 config (./run.sh dream).
+      - Ease off the throttle in a1200-1997.fs-uae (uae_cpu_throttle,
+        a smaller negative number), or remove it entirely: then even
+        the 030 config handles Medium with a good margin.
+      - Pick podcasts with a lower bitrate: the decoding time depends
+        partly on the number of bits per frame.
+      - Download episodes when nothing is playing. The network process
+        takes processor time too, and it halves the decoding speed on
+        the 030.
+      - Convert the episodes to 8SVX (the Convert button): then even
+        an unaccelerated A1200 plays them. See @{"Converting" link Convert}.
+
+   The program itself spends almost no time outside mpega.library: the
+   conversion to 14 bits and the chip memory writes are under two
+   percent of the buffer time.
+
+@ENDNODE
+
+@NODE Settings "Settings"
+@TOC Main
+@PREV Performance
+@NEXT Tooltypes
+@TITLE "CurrentPod - Settings"
+
+   Settings are made in the @{b}Settings@{ub} menu (quality, conversion, 14
+   bits, play next automatically), in the search window (country) and
+   with the volume slider. They are saved in PROGDIR:CurrentPod.prefs
+   on @{b}Project -> Save settings@{ub} and when the program quits. The rest of
+   the settings are set as @{"tooltypes" link Tooltypes} or directly in the prefs
+   file, which is plain text:
+
+      DownloadDir=Work:Internet/CurrentPod/Episodes
+      Quality=0            0 auto, 1 low, 2 medium, 3 high, 4 full
+      ConvertQuality=1     1: 12 kHz, 2: 24 kHz (8SVX)
+      Bits14=1
+      Country=se
+      MaxEpisodes=50
+      Verify=0             1: verify TLS certificates (see Troubleshooting)
+      AutoUpdate=0         (not in use yet)
+      SkipForward=30
+      SkipBack=15
+      Volume=64
+      AutoNext=1
+      Browser=Work:Internet/IBrowse/IBrowse "%s"
+
+   Tooltypes in the icon take precedence over the prefs file.
+
+   Fonts, colours, frames and window positions are set in the MUI
+   settings, as for every MUI program. The window IDs are CPD1 (the
+   main window), CPD2 (search), CPD3 (address) and CPD4 (information).
+
+@ENDNODE
+
+@NODE Tooltypes "Tooltypes"
+@TOC Main
+@PREV Settings
+@NEXT Keys
+@TITLE "CurrentPod - Tooltypes"
+
+   The following tooltypes can be set in the icon (Workbench ->
+   Information) or given as Shell arguments in the form NAME=value.
+
+      DOWNLOADDIR=path     Drawer for episodes (default PROGDIR:Episodes)
+      QUALITY=AUTO|LOW|MEDIUM|HIGH|FULL
+      CONVERT=LOW|MEDIUM   8SVX at 12 or 24 kHz
+      BITS=14|8
+      COUNTRY=xx           Country code for the catalog (se, no, dk,
+                           fi, de, gb, us, fr, nl, pl)
+      MAXEPISODES=n        Episodes per podcast in the list
+      VERIFY=0|1           Verify TLS certificates
+      BROWSER=command      With %s for the address
+      URL=address          Subscribe to the address at startup
+      LANGUAGE=svenska     Swedish interface, regardless of the Locale
+                           preferences
+      DEBUG                Log to PROGDIR:debug.log
+
+   The program is in English by default. When the Workbench language
+   in the Locale preferences is svenska it uses the Swedish catalog,
+   Catalogs/svenska/CurrentPod.catalog, by itself; LANGUAGE=svenska
+   picks that catalog no matter what Locale says.
+
+   Shell example:
+
+      Stack 65536
+      Run >NIL: Work:Internet/CurrentPod/CurrentPod QUALITY=LOW DEBUG
+
+   The program switches to a 64 KB stack by itself if the one it got
+   is smaller, so the Stack line is not necessary but does no harm.
+
+   In the Shell there is also PLAYFILE=file, which plays an MP3 file
+   directly without a podcast. It is meant for testing the player.
+
+@ENDNODE
+
+@NODE Keys "Keyboard shortcuts"
+@TOC Main
+@PREV Tooltypes
+@NEXT Files
+@TITLE "CurrentPod - Keyboard shortcuts"
+
+   @{b}The main window@{ub}
+
+      Space            Play / pause (plays the selected episode if
+                       nothing is playing)
+      Return           Play the selected episode (if downloaded)
+      Cursor right     30 s forward
+      Cursor left      15 s back
+      Cursor up/down   Move in the active list
+      Tab              Switch between the podcast and episode lists
+      Del              Delete downloaded file
+      Amiga-F          Search Apple Podcasts
+      Amiga-S          Subscribe to address
+      Amiga-U          Update podcast       Amiga-A: all
+      Amiga-D          Download episode
+      Amiga-K          Convert to 8SVX
+      Amiga-M          Heard / unheard
+      Amiga-P          Play
+      Amiga-I          Podcast information  Amiga-E: episode
+      Amiga-?          About CurrentPod
+      Amiga-Q          Quit
+
+   On the Linux keyboard in the emulator the left Windows key is the
+   right Amiga key.
+
+   MUI's own keys (Esc closes windows, Amiga-Alt-key for window size
+   and so on) work as usual.
+
+@ENDNODE
+
+@NODE Files "Files and formats"
+@TOC Main
+@PREV Keys
+@NEXT Troubleshooting
+@TITLE "CurrentPod - Files and formats"
+
+   The program drawer contains:
+
+      CurrentPod                The program (68020+, compiled with gcc)
+      CurrentPod.guide          This manual
+      CurrentPod_svenska.guide  The Swedish manual
+      CurrentPod.prefs          Settings, plain text (created on save)
+      Catalogs/svenska/
+         CurrentPod.catalog     The Swedish translation of the interface
+      Feeds/                    The database
+         feeds.idx              One line per podcast: number and name
+         0001.feed ...          The podcast's metadata and episode list
+      Episodes/                 Downloaded episodes, one drawer per podcast:
+         *.mp3                     downloaded episodes
+         *.part                    downloads in progress
+         *.8svx                    converted episodes (IFF 8SVX)
+         *.tmp                     conversion in progress
+      debug.log                 Only with DEBUG
+
+   @{b}The feed files@{ub}
+
+   Each .feed file is plain text in ISO-8859-1 with one line per
+   field, so it can be read and edited with an ordinary editor if
+   something has gone odd. The start of a file:
+
+      CURRENTPOD-FEED 1
+      Name=The Retro Hour (Retro Gaming Podcast)
+      Url=https://audioboom.com/channels/4970769.rss
+      Site=http://theretrohour.com
+      Author=The Retro Hour (Retro Gaming Podcast)
+      Lang=en
+      Image=https://audioboom.com/i/37945576.png
+      Apple=1073270208
+      ETag=W/"204980f4abfa7bc870478f83bd3a4e35"
+      Modified=Fri, 16 Oct 2026 12:05:33 GMT
+      Updated=18-Oct-26 13:35:53
+      AutoDownload=0
+      Serial=0
+      Desc=Your weekly dose of retro gaming and technology news...
+      .
+      [E]
+      Guid=audioboom-01a14494-22a1-741d-9c5c-9c046eef2bdf
+      Title=Gremlin Graphics Is Back: What Happens Next? - EP553
+      Date=2026-10-16 11:58:41
+      Enc=https://pscrb.fm/rss/p/dts.podtrac.com/redirect.mp3/...
+      Size=0
+      Type=audio/mpeg
+      Link=https://audioboom.com/posts/8965651
+      Image=https://audioboom.com/i/42371889.png
+      Dur=7456
+      Season=0
+      Episode=553
+      EType=0
+      Explicit=0
+      State=2
+      Pos=0
+      New=1
+      File=Work:Internet/CurrentPod/Episodes/The Retro Hour (Retro/...
+      Pcm=Work:Internet/CurrentPod/Episodes/The Retro Hour (Retro/...
+      Desc=Gremlin Graphics is making a comeback...\n\nContents:...
+      .
+
+   State: 0 unheard, 1 queued, 2 downloaded, 3 heard, 4 error, 5
+   partly heard, 6 being converted (becomes 2 at the next start). Pos
+   is in seconds. File is the MP3 file and Pcm the 8SVX file; if the
+   file is missing on disk at startup the field is removed. Line
+   breaks in Desc are written as "\n".
+
+   The program writes the database on every change, first to a
+   temporary file which is then renamed, so a power cut does not wreck
+   the feed. Back up the Feeds drawer if you want to keep your
+   listening history.
+
+@ENDNODE
+
+@NODE Troubleshooting "Troubleshooting"
+@TOC Main
+@PREV Files
+@NEXT KnownProblems
+@TITLE "CurrentPod - Troubleshooting"
+
+   Start with the DEBUG tooltype and the program writes a detailed log
+   to PROGDIR:debug.log: every step of a download, the decoder's
+   settings and how long each buffer took.
+
+   @{b}"Could not open bsdsocket.library: is the TCP/IP stack running?"@{ub}
+
+   In the emulator: bsdsocket_library = 1 is missing from the
+   configuration. On real hardware: start Miami/AmiTCP/Roadshow.
+
+   @{b}"AmiSSL is missing (amisslmaster.library)"@{ub}
+
+   LIBS:amisslmaster.library is missing or too old, or LIBS:AmiSSL/
+   lacks amissl_v5xx.library for your processor.
+
+   @{b}"DNS lookup failed"@{ub}
+
+   The stack cannot resolve names. If IBrowse can show the page the
+   problem is temporary.
+
+   @{b}"The certificate could not be verified"@{ub}
+
+   Only with VERIFY=1. AmiSSL's root certificates are too old for the
+   server, or the clock is wrong. The default is not to verify.
+
+   @{b}"The TLS handshake failed"@{ub}
+
+   The server requires something AmiSSL cannot do. CurrentPod limits
+   itself to TLS 1.2, since TLS 1.3 hangs after the handshake in
+   AmiSSL under FS-UAE's bsdsocket emulation. Nearly all servers still
+   allow 1.2.
+
+   @{b}"The server replied 403"@{ub}
+
+   Apple sometimes rejects too many searches in a short time. Wait a
+   while.
+
+   @{b}"The feed could not be parsed (not RSS?)"@{ub}
+
+   Usually a feed that is not RSS at all (an HTML page, an error
+   page). Open the address in IBrowse and see what comes back.
+
+   @{b}"Timeout: the server does not respond"@{ub}
+
+   No bytes in 60 seconds. Try again.
+
+   @{b}"The audio channels are busy (another program playing?)"@{ub}
+
+   Something else is holding Paula: HippoPlayer, ProTracker,
+   DeliTracker. Stop it and play again. CurrentPod releases the
+   channels when it stops.
+
+   @{b}"mpega.library is missing in LIBS:"@{ub}
+
+   Put the right variant from Aminet util/libs/mpega_library.lha in
+   LIBS: under the name mpega.library. Note that an Amiga library must
+   be called what it says inside the file, so the variants cannot live
+   under their own names.
+
+   @{b}CAN'T KEEP UP in the player panel@{ub}
+
+   The decoder is behind. Choose a lower quality, close programs that
+   eat processor time (a module player with a scope, a web browser
+   loading a page), hold off on downloads. See @{"Performance" link Performance}.
+
+   @{b}"The episode is not MP3 and cannot be played on the Amiga"@{ub}
+
+   The feed delivers AAC/M4A or video. It can be downloaded but not
+   played on the Amiga.
+
+@ENDNODE
+
+@NODE KnownProblems "Known problems"
+@TOC Main
+@PREV Troubleshooting
+@NEXT AppleDetails
+@TITLE "CurrentPod - Known problems"
+
+      - Episodes in AAC/M4A (audio/x-m4a, audio/mp4) can be downloaded
+        but not played. There is no usable AAC decoder for 68k.
+
+      - On the 030 config, searching the catalog while an MP3 is
+        playing can end with "The TLS handshake failed": the decoder
+        leaves too little time for the handshake. Pause, search, and
+        play again.
+
+      - A download halves the decoding speed on the 030, despite the
+        lower priority. Download when nothing is playing, or live with
+        it.
+
+      - The position gauge is updated per buffer (0.7-1.4 seconds).
+
+      - Skipping back and forward empties the buffers, so there is a
+        short silence before the sound comes back.
+
+      - Feeds with more than 300 episodes show only the latest 300;
+        the list shows 50 by default.
+
+      - An episode larger than 2 GB cannot be saved under FFS.
+
+      - Searching with characters outside ISO-8859-1 goes wrong.
+
+      - During 14-bit playback all four Paula channels are taken;
+        HippoPlayer cannot play at the same time.
+
+@ENDNODE
+
+@NODE AppleDetails "Apple Podcasts details"
+@TOC Main
+@PREV KnownProblems
+@NEXT Planned
+@TITLE "CurrentPod - Apple Podcasts details"
+
+   For those who want to know exactly what is sent and received.
+
+   @{b}Catalog search@{ub}
+
+   A search is a GET request:
+
+      https://itunes.apple.com/search?media=podcast&entity=podcast
+         &limit=50&country=se&term=retro+hour
+
+   The reply is JSON. CurrentPod parses it with a small parser of its
+   own and reads the fields collectionName, artistName, feedUrl,
+   artworkUrl100, trackCount, releaseDate, primaryGenreName,
+   collectionExplicitness and collectionId.
+
+   @{b}Looking up an Apple link@{ub}
+
+   The ID from the link is sent to
+
+      https://itunes.apple.com/lookup?id=1073270208&entity=podcast
+
+   which gives the same fields as above, in particular feedUrl. The
+   Apple ID is saved in the .feed file (the Apple field).
+
+   @{b}The itunes: namespace@{ub}
+
+   Tags that are parsed, in order of priority against the basic RSS
+   fields:
+
+      Podcast: itunes:image (href) > image/url
+               itunes:author > managingEditor
+               itunes:summary / description (the longest wins)
+               itunes:type (episodic/serial: serial shows oldest first)
+      Episode: itunes:title > title
+               itunes:duration (HH:MM:SS, MM:SS or seconds)
+               itunes:episode, itunes:season
+               itunes:episodeType (full/trailer/bonus)
+               itunes:explicit
+               itunes:image (episode artwork, saved as an address)
+               content:encoded / description / itunes:summary
+               (the longest wins)
+
+   @{b}User-Agent@{ub}
+
+   CurrentPod/1.0 (AmigaOS 3.1; 68k) - so that the server logs show
+   there are Amigas out there.
+
+@ENDNODE
+
+@NODE Planned "Planned"
+@TOC Main
+@PREV AppleDetails
+@NEXT Technical
+@TITLE "CurrentPod - Planned"
+
+   These were on the drawing board but did not make it into 1.0:
+
+      - ARexx port (PLAY, PAUSE, NEXT, GETATTR POSITION...)
+      - OPML import and export
+      - Drag and drop of addresses onto the window
+      - Automatic updates at an interval (the AutoUpdate field)
+      - Automatic download of new episodes per podcast (the
+        AutoDownload field exists in the database, but there is no
+        setting)
+      - Artwork in the lists (guigfx.library is on the machine)
+      - Chapters (podcast:chapters and ID3v2 CHAP)
+      - Top lists and genres in the search window
+      - More search indexes: Podcast Index and fyyd.de
+      - Streaming without downloading, sleep timer, playback speed
+      - A settings window instead of the prefs file
+      - A conversion queue (today one episode at a time) and "convert
+        automatically after download" for machines without MP3 muscle
+      - Delete the MP3 automatically when the 8SVX file is done
+
+@ENDNODE
+
+@NODE Technical "Technical"
+@TOC Main
+@PREV Planned
+@NEXT License
+@TITLE "CurrentPod - Technical"
+
+   Written in C, cross-compiled on Linux with bebbo/AmigaPorts gcc 6.5
+   (m68k-amigaos, libnix, -m68020 -m68881). The source code lives in
+   src/currentpod on the host machine:
+
+      main.c      startup, tooltypes, settings, stack switch
+      gui.c       the MUI windows and the main loop
+      worker.c    the network process: one job at a time (feed,
+                  search, lookup, download)
+      http.c      HTTP/HTTPS client over bsdsocket and AmiSSL
+      rss.c       RSS/Atom parser with itunes: tags
+      json.c      JSON reading for Apple's replies
+      db.c        the database in PROGDIR:Feeds
+      player.c    the player process: mpega.library -> audio.device,
+                  or 8SVX from disk -> audio.device
+      convert.c   the conversion process: mpega.library -> 8SVX file
+      util.c      strings, UTF-8, dates, files
+
+   Four processes: the main program (priority 0) owns the GUI and the
+   database; the network process (-1) does all network I/O and parses
+   feeds; the player process (+1) decodes and feeds Paula; the
+   converter (-2) makes 8SVX files out of the time left over. They
+   talk with Exec messages, and the player's status lives in a shared
+   structure that the GUI reads once a second via timer.device.
+
+   Lessons from the build, for anyone who wants to do something
+   similar: the MUI SDK's inline MUI_NewObject takes the address of a
+   varargs argument and crashes with gcc (CurrentPod has its own
+   variant); subprocesses have no PROGDIR:; a library must be opened
+   with the name that is stored inside the file; libnix reads %d as 16
+   bits; and TLS 1.3 hangs in AmiSSL under FS-UAE.
+
+@ENDNODE
+
+@NODE License "License and thanks"
+@TOC Main
+@PREV Technical
+@NEXT Index
+@TITLE "CurrentPod - License and thanks"
+
+   CurrentPod is free to use and distribute. The program comes as is;
+   the author is not responsible for a full hard disk or for what the
+   podcasts say.
+
+   @{b}Thanks to@{ub}
+
+      Stefan Stuntz                  MUI
+      Stéphane Tavenard              mpega.library (1997-1999, and it
+                                     still decodes)
+      Jens Maus and the AmiSSL team  AmiSSL
+      Stefan "Bebbo" Franke          gcc for m68k-amigaos
+      Krzysztof Radzikowski and      for showing that podcasts on the
+      George Sokianos                Amiga can be done (AMIcast Player,
+                                     MediaVault)
+      The Retro Hour                 test podcast
+
+   @{b}Trademarks@{ub}
+
+   Apple, Apple Podcasts and iTunes are trademarks of Apple Inc.
+   CurrentPod is not endorsed by, affiliated with or otherwise
+   connected to Apple.
+
+@ENDNODE
+
+@NODE Index "Index"
+@TOC Main
+@PREV License
+@TITLE "CurrentPod - Index"
+
+   @{" 14 bits                " link Playback}
+   @{" 8SVX                   " link Convert}
+   @{" AAC/M4A                " link KnownProblems}
+   @{" AmiSSL                 " link Requirements}
+   @{" Apple links            " link Subscribe}
+   @{" Apple Podcasts, details" link AppleDetails}
+   @{" bsdsocket.library      " link Troubleshooting}
+   @{" Button row             " link MainWindow}
+   @{" Catalog search         " link Catalog}
+   @{" Certificates           " link Troubleshooting}
+   @{" ChaCha20               " link Download}
+   @{" Converting             " link Convert}
+   @{" Country                " link Catalog}
+   @{" DEBUG                  " link Troubleshooting}
+   @{" Deleting episodes      " link Download}
+   @{" Download button        " link MainWindow}
+   @{" Download queue         " link Download}
+   @{" Episode information    " link Episodes}
+   @{" Episode list           " link Episodes}
+   @{" Explicit               " link Catalog}
+   @{" FFS, file names        " link Download}
+   @{" File formats           " link Files}
+   @{" Installation           " link Installation}
+   @{" itunes: tags           " link AppleDetails}
+   @{" Keyboard shortcuts     " link Keys}
+   @{" Known problems         " link KnownProblems}
+   @{" License                " link License}
+   @{" Main window            " link MainWindow}
+   @{" Menus                  " link MainWindow}
+   @{" mpega.library          " link Troubleshooting}
+   @{" Paula                  " link Playback}
+   @{" Performance            " link Performance}
+   @{" Planned                " link Planned}
+   @{" Play button            " link MainWindow}
+   @{" Playback               " link Playback}
+   @{" Position               " link Playback}
+   @{" Priorities             " link Technical}
+   @{" Quality levels         " link Playback}
+   @{" Quick start            " link QuickStart}
+   @{" Requirements           " link Requirements}
+   @{" Resuming               " link Download}
+   @{" Settings               " link Settings}
+   @{" Shell arguments        " link Tooltypes}
+   @{" Skipping forward/back  " link Playback}
+   @{" Status column          " link Episodes}
+   @{" Subscribing            " link Subscribe}
+   @{" Technical              " link Technical}
+   @{" TLS 1.2                " link Troubleshooting}
+   @{" Tooltypes              " link Tooltypes}
+   @{" Troubleshooting        " link Troubleshooting}
+   @{" Updating feeds         " link Update}
+   @{" User-Agent             " link AppleDetails}
+
+@ENDNODE
