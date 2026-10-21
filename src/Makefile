@@ -44,6 +44,10 @@ $(L1)/%: % | $(OUT)
 $(OUT)/%.o: $(L1)/%.c $(HDR) | $(OUT)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+# stackbytet i main(): se kommentaren där
+$(OUT)/main.o: $(L1)/main.c $(HDR) | $(OUT)
+	$(CC) $(CFLAGS) -fno-defer-pop -c -o $@ $<
+
 $(OUT)/CurrentPod: $(OBJ)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS)
 	$(STRIP) --strip-all $@ 2>/dev/null || true

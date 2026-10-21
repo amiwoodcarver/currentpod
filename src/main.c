@@ -142,9 +142,19 @@ static void read_args(int argc, char **argv)
 static int real_main(int argc, char **argv);
 
 /* Körs vi med för liten stack (Run från ett Shell ger ofta 4 KB) byter vi
-   till en egen på 64 KB; MUI och nätkoden vill ha det. */
+   till en egen på 64 KB; MUI och nätkoden vill ha det.
+
+   Mellan de två StackSwap-anropen får main() inte lägga något på stacken som
+   tas bort efteråt: gcc skjuter upp stackrensningen efter anrop (-fdefer-pop),
+   så argument som läggs på den nya stacken plockas annars bort från den gamla
+   först efter bytet tillbaka, och main() återvänder till skräp (Guru
+   80000006 vid avslut). Därför görs allt arbete i stack_main(), som inte får
+   inlinas och inte tar några argument, och main.c byggs med -fno-defer-pop.
+   Variablerna som används efter bytet är statiska: med -fomit-frame-pointer
+   adresseras lokala variabler via SP, som då pekar på den andra stacken. */
 #define WANTSTACK 65536
 static int main_argc; static char **main_argv; static int main_rc;
+static void stack_main(void) __attribute__((noinline));
 static void stack_main(void) { main_rc = real_main(main_argc, main_argv); }
 
 int main(int argc, char **argv)
@@ -154,8 +164,9 @@ int main(int argc, char **argv)
     (void)ver;
     (void)stack_cookie;
     if (have < WANTSTACK) {
-        struct StackSwapStruct sss;
-        UBYTE *stk = AllocVec(WANTSTACK, MEMF_ANY);
+        static struct StackSwapStruct sss;
+        static UBYTE *stk;
+        stk = AllocVec(WANTSTACK, MEMF_ANY);
         if (stk) {
             main_argc = argc; main_argv = argv;
             sss.stk_Lower = stk;
