@@ -9,6 +9,8 @@
 #include <proto/intuition.h>
 #include <proto/utility.h>
 #include <proto/graphics.h>
+#include <proto/diskfont.h>
+#include <graphics/text.h>
 #include <clib/alib_protos.h>
 #include <dos/dostags.h>
 #include <stdlib.h>
@@ -780,6 +782,40 @@ static Object *make_menu(void)
     return MUI_MakeObject(MUIO_MenustripNM, nm, 0);
 }
 
+/* Fönstren får helvetica 11. Utan MUI-inställningar ritar MUI allt med
+ * topaz 8, utom i fönster som är för breda för skärmen (CLAUDE.md, fälla 11).
+ * Texter och etiketter ärver fonten från rotgruppen; listor, knappar och
+ * cykelknappar har egna fonter och får den var för sig. Saknas fonten blir
+ * det som förut. */
+struct Library *DiskfontBase;
+static struct TextFont *ui_font;
+static struct TextAttr ui_ta = { (STRPTR)"helvetica.font", 11, 0, 0 };
+#define FONT_TAG (ui_font ? MUIA_Font : TAG_IGNORE), (ULONG)ui_font
+
+static void font_open(void)
+{
+    if ((DiskfontBase = OpenLibrary((STRPTR)"diskfont.library", 36))) ui_font = OpenDiskFont(&ui_ta);
+    log_msg("gui: helvetica 11 %s", ui_font ? "öppnad" : "saknas, MUI:s font används");
+}
+
+static void font_close(void)
+{
+    if (ui_font) { CloseFont(ui_font); ui_font = NULL; }
+    if (DiskfontBase) { CloseLibrary(DiskfontBase); DiskfontBase = NULL; }
+}
+
+/* som SimpleButton, men med fönstrens font */
+static Object *Button(const char *label)
+{
+    return TextObject, ButtonFrame, FONT_TAG,
+        MUIA_Text_Contents, label,
+        MUIA_Text_PreParse, "\33c",
+        MUIA_InputMode, MUIV_InputMode_RelVerify,
+        MUIA_Background, MUII_ButtonBack,
+        MUIA_CycleChain, 1,
+    End;
+}
+
 static Object *create_windows(void)
 {
     static const char *countries[12];
@@ -801,7 +837,7 @@ static Object *create_windows(void)
                         Child, feedlist = ListviewObject,
                             MUIA_CycleChain, 1,
                             MUIA_Listview_List, ListObject,
-                                InputListFrame,
+                                InputListFrame, FONT_TAG,
                                 MUIA_List_Format, "MIW=20 MAW=-1 BAR,MIW=3 P=\33r",
                                 MUIA_List_DisplayHook, &feed_hook,
                                 MUIA_List_Title, TRUE,
@@ -813,28 +849,28 @@ static Object *create_windows(void)
                         Child, eplist = ListviewObject,
                             MUIA_CycleChain, 1,
                             MUIA_Listview_List, ListObject,
-                                InputListFrame,
+                                InputListFrame, FONT_TAG,
                                 MUIA_List_Format, "MIW=10 BAR,MIW=14,MIW=30 W=150 BAR,MIW=10 P=\33r",
                                 MUIA_List_DisplayHook, &ep_hook,
                                 MUIA_List_Title, TRUE,
                             End,
                         End,
                         Child, HGroup,
-                            Child, b_dl = SimpleButton(_(MSG_BTN_DOWNLOAD)),
-                            Child, b_playep = SimpleButton(_(MSG_BTN_PLAY)),
-                            Child, b_conv = SimpleButton(_(MSG_BTN_CONVERT)),
+                            Child, b_dl = Button(_(MSG_BTN_DOWNLOAD)),
+                            Child, b_playep = Button(_(MSG_BTN_PLAY)),
+                            Child, b_conv = Button(_(MSG_BTN_CONVERT)),
                         End,
                     End,
                 End;
     log_msg("gui: listor %lx", (ULONG)lists);
     player = VGroup, GroupFrameT(_(MSG_GROUP_PLAYER)),
                     Child, HGroup,
-                        Child, b_prev = SimpleButton("|<"),
-                        Child, b_skipb = SimpleButton("<<"),
-                        Child, b_play = SimpleButton(" > "),
-                        Child, b_pause = SimpleButton("||"),
-                        Child, b_skipf = SimpleButton(">>"),
-                        Child, b_next = SimpleButton(">|"),
+                        Child, b_prev = Button("|<"),
+                        Child, b_skipb = Button("<<"),
+                        Child, b_play = Button(" > "),
+                        Child, b_pause = Button("||"),
+                        Child, b_skipf = Button(">>"),
+                        Child, b_next = Button(">|"),
                         Child, t_title = TextObject, TextFrame, MUIA_Background, MUII_TextBack, MUIA_Text_Contents, _(MSG_NOTHING_PLAYING), MUIA_Weight, 200, End,
                         Child, t_time = TextObject, TextFrame, MUIA_Background, MUII_TextBack, MUIA_Text_Contents, _(MSG_TIME_ZERO), MUIA_Text_PreParse, "\33r", MUIA_FixWidthTxt, "0:00:00 / 0:00:00", End,
                     End,
@@ -854,7 +890,7 @@ static Object *create_windows(void)
             MUIA_Window_ID, MAKE_ID('C','P','D','1'),
             MUIA_Window_Width, MUIV_Window_Width_Screen(96),    /* avsnittstitlarna behöver bredd */
             MUIA_Window_Height, MUIV_Window_Height_Screen(80),
-            WindowContents, VGroup,
+            WindowContents, VGroup, FONT_TAG,
                 Child, lists,
                 Child, player,
                 Child, status,
@@ -879,17 +915,17 @@ static Object *create_windows(void)
     swin = WindowObject,
             MUIA_Window_Title, _(MSG_WIN_SEARCH),
             MUIA_Window_ID, MAKE_ID('C','P','D','2'),
-            WindowContents, VGroup,
+            WindowContents, VGroup, FONT_TAG,
                 Child, HGroup,
                     Child, Label2(_(MSG_LABEL_SEARCH)),
                     Child, s_term = StringObject, StringFrame, MUIA_String_MaxLen, 100, MUIA_CycleChain, 1, End,
                     Child, Label2(_(MSG_LABEL_COUNTRY)),
-                    Child, s_country = CycleObject, MUIA_Cycle_Entries, countries, MUIA_Cycle_Active, ci, End,
+                    Child, s_country = CycleObject, FONT_TAG, MUIA_Cycle_Entries, countries, MUIA_Cycle_Active, ci, End,
                 End,
                 Child, s_list = ListviewObject,
                     MUIA_CycleChain, 1,
                     MUIA_Listview_List, ListObject,
-                        InputListFrame,
+                        InputListFrame, FONT_TAG,
                         MUIA_List_Format, "MIW=20 MAW=-1 BAR,MIW=10 BAR,MIW=5 P=\33r",
                         MUIA_List_DisplayHook, &hit_hook,
                         MUIA_List_Title, TRUE,
@@ -897,8 +933,8 @@ static Object *create_windows(void)
                 End,
                 Child, s_status = TextObject, MUIA_Text_Contents, _(MSG_SEARCH_HINT), End,
                 Child, HGroup,
-                    Child, s_sub = SimpleButton(_(MSG_BTN_SUBSCRIBE)),
-                    Child, s_close = SimpleButton(_(MSG_BTN_CLOSE)),
+                    Child, s_sub = Button(_(MSG_BTN_SUBSCRIBE)),
+                    Child, s_close = Button(_(MSG_BTN_CLOSE)),
                 End,
             End,
         End;
@@ -906,12 +942,12 @@ static Object *create_windows(void)
     uwin = WindowObject,
             MUIA_Window_Title, _(MSG_WIN_URL),
             MUIA_Window_ID, MAKE_ID('C','P','D','3'),
-            WindowContents, VGroup,
+            WindowContents, VGroup, FONT_TAG,
                 Child, TextObject, MUIA_Text_Contents, _(MSG_URL_PROMPT), End,
                 Child, u_str = StringObject, StringFrame, MUIA_String_MaxLen, URLMAX - 1, MUIA_CycleChain, 1, End,
                 Child, HGroup,
-                    Child, u_ok = SimpleButton(_(MSG_BTN_SUBSCRIBE)),
-                    Child, u_cancel = SimpleButton(_(MSG_BTN_CANCEL)),
+                    Child, u_ok = Button(_(MSG_BTN_SUBSCRIBE)),
+                    Child, u_cancel = Button(_(MSG_BTN_CANCEL)),
                 End,
             End,
         End;
@@ -921,13 +957,13 @@ static Object *create_windows(void)
             MUIA_Window_ID, MAKE_ID('C','P','D','4'),
             MUIA_Window_Width, MUIV_Window_Width_Screen(50),
             MUIA_Window_Height, MUIV_Window_Height_Screen(50),
-            WindowContents, VGroup,
+            WindowContents, VGroup, FONT_TAG,
                 Child, i_title = TextObject, TextFrame, MUIA_Background, MUII_TextBack, MUIA_Text_Contents, "", End,
                 Child, ListviewObject,
                     MUIA_Listview_Input, FALSE,
-                    MUIA_Listview_List, i_text = FloattextObject, ReadListFrame, MUIA_Floattext_Text, "", MUIA_Floattext_Justify, FALSE, End,
+                    MUIA_Listview_List, i_text = FloattextObject, ReadListFrame, FONT_TAG, MUIA_Floattext_Text, "", MUIA_Floattext_Justify, FALSE, End,
                 End,
-                Child, i_close = SimpleButton(_(MSG_BTN_CLOSE)),
+                Child, i_close = Button(_(MSG_BTN_CLOSE)),
             End,
         End;
     log_msg("gui: infofönster %lx", (ULONG)iwin);
@@ -1272,8 +1308,10 @@ int gui_run(void)
     playport = CreateMsgPort();
     convport = CreateMsgPort();
     if (!jobport || !playport || !convport) return 20;
+    font_open();
     if (!create_windows()) {
         log_msg("gui: create_windows misslyckades");
+        font_close();
         CloseLibrary(MUIMasterBase);
         return 20;
     }
@@ -1383,6 +1421,7 @@ int gui_run(void)
     }
     timer_stop();
     MUI_DisposeObject(app);
+    font_close();
     DeleteMsgPort(jobport);
     DeleteMsgPort(playport);
     DeleteMsgPort(convport);
